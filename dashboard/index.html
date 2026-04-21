@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CTC Curriculum Infrastructure — Director Meeting</title>
+<style>
+:root {
+  --blue: #2563EB;
+  --blue-light: #EFF6FF;
+  --blue-dark: #1D4ED8;
+  --teal: #0D9488;
+  --teal-light: #F0FDFA;
+  --teal-border: #99F6E4;
+  --amber: #D97706;
+  --amber-light: #FFFBEB;
+  --slate-50: #F8FAFC;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+  --slate-300: #CBD5E1;
+  --slate-400: #94A3B8;
+  --slate-500: #64748B;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1E293B;
+  --nav-width: 220px;
+  --header-height: 54px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: white; color: var(--slate-800); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+/* HEADER */
+header { height: var(--header-height); background: var(--slate-800); color: white; display: flex; align-items: center; padding: 0 24px; gap: 16px; flex-shrink: 0; }
+.hdr-title { font-size: clamp(13px, 1.4vw, 16px); font-weight: 700; letter-spacing: 0.01em; }
+.hdr-org { font-size: clamp(11px, 1.1vw, 13px); color: var(--slate-400); font-weight: 500; }
+.hdr-section { font-size: clamp(12px, 1.2vw, 14px); color: var(--slate-400); margin-left: auto; }
+
+/* LAYOUT */
+.layout { display: flex; flex: 1; overflow: hidden; }
+
+/* NAV RAIL */
+nav { width: var(--nav-width); background: var(--slate-50); border-right: 1px solid var(--slate-200); overflow-y: auto; flex-shrink: 0; padding: 12px 0; }
+.nav-item { position: relative; cursor: pointer; padding: 9px 14px; border-left: 3px solid transparent; transition: background 0.12s; }
+.nav-item:hover { background: var(--slate-100); }
+.nav-item.current { border-left-color: var(--blue); background: var(--blue-light); }
+.nav-item.visited .nav-lbl { color: var(--slate-400); }
+.nav-item.visited::after { content: '✓'; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 10px; color: var(--slate-400); }
+.nav-num { font-size: 10px; font-weight: 700; color: var(--slate-400); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1px; }
+.nav-item.current .nav-num { color: var(--blue); }
+.nav-lbl { font-size: clamp(12px, 1.1vw, 13px); font-weight: 500; color: var(--slate-700); line-height: 1.2; }
+.nav-item.current .nav-lbl { color: var(--blue-dark); font-weight: 700; }
+.nav-time { font-size: 10px; color: var(--slate-400); margin-top: 2px; }
+.nav-sub { margin-left: 12px; border-left: 2px solid var(--slate-200); padding-left: 6px; }
+.nav-sub .nav-item { padding: 6px 10px; border-left: none; border-radius: 4px; }
+.nav-sub .nav-item.current { background: var(--blue-light); }
+.nav-sub .nav-lbl { font-size: 11px; }
+
+/* CONTENT */
+main { flex: 1; overflow-y: auto; padding: clamp(20px, 3vw, 44px) clamp(20px, 3vw, 48px); }
+.section { display: none; max-width: 880px; }
+.section.active { display: block; }
+
+/* TYPOGRAPHY */
+.eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate-400); margin-bottom: 6px; }
+.sec-title { font-size: clamp(22px, 3vw, 32px); font-weight: 700; color: var(--slate-800); margin-bottom: 6px; line-height: 1.15; }
+.sec-sub { font-size: clamp(13px, 1.5vw, 16px); color: var(--slate-500); margin-bottom: 28px; line-height: 1.5; }
+.divider { border: none; border-top: 1px solid var(--slate-200); margin: 24px 0; }
+
+/* CALLOUT */
+.callout { border-left: 4px solid var(--slate-300); background: var(--slate-50); border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 18px; }
+.callout.blue { border-left-color: var(--blue); background: var(--blue-light); }
+.callout.teal { border-left-color: var(--teal); background: var(--teal-light); }
+.callout.amber { border-left-color: var(--amber); background: var(--amber-light); }
+.callout-lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate-400); margin-bottom: 5px; }
+.callout p { font-size: clamp(13px, 1.4vw, 15px); color: var(--slate-700); line-height: 1.65; }
+
+/* TOGGLE BUTTONS */
+.toggle-group { display: flex; gap: 8px; margin-bottom: 22px; flex-wrap: wrap; }
+.tbtn { padding: 7px 15px; border-radius: 6px; border: 1.5px solid var(--slate-200); background: white; font-size: clamp(12px, 1.2vw, 13px); font-weight: 500; color: var(--slate-600); cursor: pointer; font-family: var(--font); transition: all 0.12s; }
+.tbtn:hover { border-color: var(--slate-300); background: var(--slate-50); }
+.tbtn.active { background: var(--slate-800); color: white; border-color: var(--slate-800); }
+.tbtn.teal-active { background: var(--teal); color: white; border-color: var(--teal); }
+
+/* REC TOGGLE */
+.rec-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.rec-btn { padding: 7px 15px; border-radius: 6px; border: 1.5px solid var(--amber); background: white; font-size: clamp(11px, 1.1vw, 13px); font-weight: 600; color: var(--amber); cursor: pointer; font-family: var(--font); transition: all 0.12s; }
+.rec-btn.on { background: var(--amber); color: white; }
+.rec-box { display: none; background: var(--amber-light); border: 1px solid #FDE68A; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; }
+.rec-box.on { display: block; }
+.rec-box p { font-size: clamp(13px, 1.4vw, 15px); color: var(--slate-700); line-height: 1.65; }
+
+/* NON-NEG BANNER */
+.non-neg { background: var(--slate-800); color: white; border-radius: 8px; padding: 12px 18px; margin-bottom: 20px; display: flex; gap: 12px; }
+.non-neg-lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate-500); white-space: nowrap; padding-top: 2px; }
+.non-neg p { font-size: clamp(12px, 1.3vw, 14px); color: #E2E8F0; line-height: 1.55; }
+
+/* OPTION CARDS */
+.card-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 20px; }
+@media(max-width:820px){ .card-grid { grid-template-columns: 1fr; } }
+.opt-card { border: 2px solid var(--slate-200); border-radius: 10px; overflow: hidden; cursor: pointer; transition: box-shadow 0.12s; }
+.opt-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+.opt-card.rec { border-color: var(--amber); }
+.opt-hdr { padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; }
+.opt-card.gray .opt-hdr { background: var(--slate-50); }
+.opt-card.blue .opt-hdr { background: var(--blue-light); }
+.opt-card.teal .opt-hdr { background: var(--teal-light); }
+.opt-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; }
+.opt-card.gray .opt-badge { background: var(--slate-200); color: var(--slate-600); }
+.opt-card.blue .opt-badge { background: var(--blue); color: white; }
+.opt-card.teal .opt-badge { background: var(--teal); color: white; }
+.rec-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; background: var(--amber); color: white; padding: 2px 7px; border-radius: 4px; display: none; }
+.rec-tag.on { display: inline-block; }
+.opt-body { padding: 12px 14px; }
+.opt-name { font-size: clamp(13px, 1.4vw, 15px); font-weight: 700; color: var(--slate-800); margin-bottom: 2px; }
+.opt-desc { font-size: clamp(11px, 1.1vw, 12px); color: var(--slate-500); margin-bottom: 10px; }
+.opt-bullets { list-style: none; }
+.opt-bullets li { font-size: clamp(11px, 1.1vw, 12px); color: var(--slate-600); padding: 2px 0 2px 13px; position: relative; line-height: 1.45; }
+.opt-bullets li::before { content: '–'; position: absolute; left: 0; color: var(--slate-400); }
+.expand-hint { font-size: 11px; color: var(--slate-400); text-align: right; padding: 6px 14px; cursor: pointer; user-select: none; }
+.expand-hint:hover { color: var(--slate-600); }
+.opt-detail { display: none; border-top: 1px solid var(--slate-200); padding: 12px 14px; background: var(--slate-50); }
+.opt-card.open .opt-detail { display: block; }
+.pc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.pc-col h5 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+.pros h5 { color: #16A34A; }
+.cons h5 { color: #DC2626; }
+.pc-col ul { list-style: none; }
+.pc-col ul li { font-size: 11px; color: var(--slate-600); padding: 2px 0 2px 13px; position: relative; line-height: 1.4; }
+.pros ul li::before { content: '+'; position: absolute; left: 0; color: #16A34A; font-weight: 700; }
+.cons ul li::before { content: '–'; position: absolute; left: 0; color: #DC2626; }
+.best-fit { font-size: 11px; color: var(--slate-500); border-top: 1px solid var(--slate-200); padding-top: 8px; margin-top: 4px; font-style: italic; }
+.best-fit strong { font-style: normal; color: var(--slate-700); }
+
+/* AGENDA */
+.agenda-list { list-style: none; margin-bottom: 28px; }
+.agenda-item { display: flex; align-items: baseline; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--slate-100); }
+.ag-num { font-size: 10px; font-weight: 700; color: var(--slate-400); min-width: 20px; }
+.ag-name { flex: 1; font-size: clamp(14px, 1.5vw, 16px); font-weight: 500; color: var(--slate-700); }
+.ag-time { font-size: 12px; color: var(--slate-400); white-space: nowrap; }
+.outcomes { list-style: none; }
+.outcomes li { display: flex; gap: 12px; padding: 10px 0; font-size: clamp(13px, 1.4vw, 16px); color: var(--slate-700); line-height: 1.5; border-bottom: 1px solid var(--slate-100); }
+.out-num { font-weight: 700; color: var(--blue); min-width: 18px; }
+
+/* FINDINGS */
+.finding { border: 1px solid var(--slate-200); border-radius: 8px; padding: 14px 18px; margin-bottom: 12px; }
+.finding-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--slate-400); margin-bottom: 3px; }
+.finding-title { font-size: clamp(14px, 1.5vw, 16px); font-weight: 600; color: var(--slate-800); margin-bottom: 5px; }
+.finding-desc { font-size: clamp(12px, 1.3vw, 14px); color: var(--slate-600); line-height: 1.6; }
+
+/* BRIDGE PILLARS */
+.pillar-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+.pillar-box { border-radius: 10px; padding: 18px 20px; }
+.pillar-box.blue { background: var(--blue-light); border: 1.5px solid #BFDBFE; }
+.pillar-box.teal { background: var(--teal-light); border: 1.5px solid var(--teal-border); }
+.pb-num { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3px; }
+.pillar-box.blue .pb-num { color: var(--blue); }
+.pillar-box.teal .pb-num { color: var(--teal); }
+.pb-title { font-size: clamp(14px, 1.5vw, 17px); font-weight: 700; color: var(--slate-800); margin-bottom: 5px; }
+.pb-desc { font-size: clamp(12px, 1.3vw, 14px); color: var(--slate-600); line-height: 1.55; }
+
+/* PL ARC */
+.arc-wrap { display: flex; gap: 8px; margin-bottom: 24px; }
+.arc-phase { flex: 1; }
+.arc-box { border: 1.5px solid var(--slate-200); border-radius: 8px; padding: 14px; height: 100%; }
+.arc-num { font-size: 10px; font-weight: 700; color: var(--teal); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 3px; }
+.arc-title { font-size: clamp(12px, 1.3vw, 14px); font-weight: 700; color: var(--slate-800); margin-bottom: 5px; line-height: 1.3; }
+.arc-desc { font-size: clamp(11px, 1.1vw, 12px); color: var(--slate-500); line-height: 1.5; }
+.arc-time { font-size: 10px; color: var(--slate-400); margin-top: 6px; font-style: italic; }
+.arc-arrow { display: flex; align-items: center; color: var(--slate-300); font-size: 18px; flex-shrink: 0; padding-top: 4px; }
+
+/* UNIT PREVIEW */
+.unit-header-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: 8px; padding: 14px 18px; margin-bottom: 14px; }
+.uh-field-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-400); margin-bottom: 2px; }
+.uh-field-val { font-size: clamp(12px, 1.3vw, 14px); color: var(--slate-700); font-weight: 500; }
+.unit-stage { border: 1px solid var(--slate-200); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+.us-hdr { background: var(--slate-50); padding: 9px 15px; font-size: 12px; font-weight: 700; color: var(--slate-700); border-bottom: 1px solid var(--slate-200); }
+.us-body { padding: 12px 15px; }
+.us-field { margin-bottom: 10px; }
+.us-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-400); margin-bottom: 3px; }
+.us-val { font-size: clamp(12px, 1.3vw, 14px); color: var(--slate-700); line-height: 1.6; }
+
+/* DISCUSSION */
+.discussion-prompt { font-size: clamp(22px, 3vw, 32px); font-weight: 600; color: var(--slate-700); text-align: center; padding: 48px 20px 36px; line-height: 1.4; }
+.obj-table { display: none; margin-top: 8px; }
+.obj-table.on { display: block; }
+.obj-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--slate-400); margin-bottom: 10px; }
+.obj-row { display: grid; grid-template-columns: 1fr 1.5fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--slate-100); font-size: clamp(12px, 1.3vw, 14px); }
+.obj-q { color: var(--slate-600); font-style: italic; }
+.obj-a { color: var(--slate-700); }
+
+/* DECISIONS */
+.dec-section { margin-bottom: 28px; }
+.dec-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--slate-400); margin-bottom: 8px; }
+.dec-title { font-size: clamp(15px, 1.7vw, 19px); font-weight: 600; color: var(--slate-800); margin-bottom: 14px; }
+.sel-group { display: flex; gap: 10px; flex-wrap: wrap; }
+.sel-btn { padding: 9px 18px; border-radius: 8px; border: 2px solid var(--slate-200); background: white; font-size: clamp(12px, 1.3vw, 14px); font-weight: 500; color: var(--slate-600); cursor: pointer; font-family: var(--font); transition: all 0.12s; }
+.sel-btn:hover { border-color: var(--slate-300); }
+.sel-btn.on { border-color: var(--blue); background: var(--blue-light); color: var(--blue-dark); font-weight: 700; }
+
+/* NEXT STEPS */
+.ns-box { border: 2px solid var(--teal); border-radius: 12px; padding: 22px 24px; margin-bottom: 22px; }
+.ns-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 7px; }
+.ns-title { font-size: clamp(16px, 1.8vw, 20px); font-weight: 700; color: var(--slate-800); margin-bottom: 10px; }
+.ns-desc { font-size: clamp(13px, 1.4vw, 15px); color: var(--slate-600); line-height: 1.65; margin-bottom: 14px; }
+.card-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+.card { border: 1px solid var(--slate-200); border-radius: 10px; padding: 18px; }
+.card-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--slate-400); margin-bottom: 10px; }
+.check-list { list-style: none; }
+.check-list li { font-size: clamp(12px, 1.3vw, 14px); color: var(--slate-700); padding: 6px 0; border-bottom: 1px solid var(--slate-100); }
+.lb-list { list-style: none; }
+.lb-list li { font-size: clamp(12px, 1.3vw, 14px); color: var(--slate-700); padding: 6px 0 6px 18px; border-bottom: 1px solid var(--slate-100); position: relative; }
+.lb-list li::before { content: '→'; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-title">CTC Curriculum Infrastructure</div>
+  <div class="hdr-org">CCIU</div>
+  <div class="hdr-section" id="hdr-sec">Director Meeting</div>
+</header>
+
+<div class="layout">
+
+  <nav>
+    <div class="nav-item current" id="n01" onclick="go('01')">
+      <div class="nav-num">01</div>
+      <div class="nav-lbl">Welcome + Agenda</div>
+      <div class="nav-time">3 min</div>
+    </div>
+    <div class="nav-item" id="n02" onclick="go('02')">
+      <div class="nav-num">02</div>
+      <div class="nav-lbl">What We Know</div>
+      <div class="nav-time">10 min</div>
+    </div>
+    <div class="nav-item" id="n03" onclick="go('03')">
+      <div class="nav-num">03</div>
+      <div class="nav-lbl">The Bridge</div>
+      <div class="nav-time">5 min</div>
+    </div>
+    <div class="nav-item" id="n04" onclick="go('04a')">
+      <div class="nav-num">04</div>
+      <div class="nav-lbl">The Framework</div>
+      <div class="nav-time">20 min</div>
+    </div>
+    <div class="nav-sub">
+      <div class="nav-item" id="n04a" onclick="go('04a')">
+        <div class="nav-lbl">4a — Infrastructure</div>
+      </div>
+      <div class="nav-item" id="n04b" onclick="go('04b')">
+        <div class="nav-lbl">4b — Protocol + PD</div>
+      </div>
+    </div>
+    <div class="nav-item" id="n05" onclick="go('05')">
+      <div class="nav-num">05</div>
+      <div class="nav-lbl">Discussion</div>
+      <div class="nav-time">10 min</div>
+    </div>
+    <div class="nav-item" id="n06" onclick="go('06')">
+      <div class="nav-num">06</div>
+      <div class="nav-lbl">Decisions</div>
+      <div class="nav-time">7 min</div>
+    </div>
+    <div class="nav-item" id="n07" onclick="go('07')">
+      <div class="nav-num">07</div>
+      <div class="nav-lbl">Next Steps</div>
+      <div class="nav-time">5 min</div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- 01 WELCOME -->
+    <section class="section active" id="s01">
+      <div class="eyebrow">Section 01 · 3 min</div>
+      <div class="sec-title">Welcome + Agenda</div>
+      <div class="sec-sub">A purposeful 60 minutes.</div>
+      <ul class="agenda-list">
+        <li class="agenda-item"><span class="ag-num">01</span><span class="ag-name">Welcome + Agenda</span><span class="ag-time">3 min</span></li>
+        <li class="agenda-item"><span class="ag-num">02</span><span class="ag-name">What We Know</span><span class="ag-time">10 min</span></li>
+        <li class="agenda-item"><span class="ag-num">03</span><span class="ag-name">The Bridge</span><span class="ag-time">5 min</span></li>
+        <li class="agenda-item"><span class="ag-num">04</span><span class="ag-name">The Framework — Two Pillars</span><span class="ag-time">20 min</span></li>
+        <li class="agenda-item"><span class="ag-num">05</span><span class="ag-name">Reaction + Discussion</span><span class="ag-time">10 min</span></li>
+        <li class="agenda-item"><span class="ag-num">06</span><span class="ag-name">Decisions</span><span class="ag-time">7 min</span></li>
+        <li class="agenda-item"><span class="ag-num">07</span><span class="ag-name">Next Steps + Close</span><span class="ag-time">5 min</span></li>
+      </ul>
+      <hr class="divider">
+      <div class="eyebrow">Three outcomes for this hour</div>
+      <ul class="outcomes">
+        <li><span class="out-num">1</span>Ground in what the SREB audit and focus groups found</li>
+        <li><span class="out-num">2</span>Share a framework and direction for addressing it</li>
+        <li><span class="out-num">3</span>Leave with a clear next step</li>
+      </ul>
+    </section>
+
+    <!-- 02 WHAT WE KNOW -->
+    <section class="section" id="s02">
+      <div class="eyebrow">Section 02 · 10 min</div>
+      <div class="sec-title">What We Know</div>
+      <div class="sec-sub">Evidence-based framing — not a diagnosis request.</div>
+      <div class="toggle-group">
+        <button class="tbtn active" onclick="tv('02','audit',this)">Audit Findings</button>
+        <button class="tbtn" onclick="tv('02','focus',this)">Focus Group Finding</button>
+      </div>
+      <div id="02-audit">
+        <div class="finding">
+          <div class="finding-lbl">Curriculum Documentation</div>
+          <div class="finding-title">Curriculum is not formally documented in a consistent format</div>
+          <div class="finding-desc">Task sheets and textbooks function as de facto curriculum. No shared understanding of what a "unit" means exists across faculty.</div>
+        </div>
+        <div class="finding">
+          <div class="finding-lbl">Cross-Campus Consistency</div>
+          <div class="finding-title">Same programs taught differently across campuses — no shared scope or sequence</div>
+          <div class="finding-desc">No mechanism for teachers across campuses to share, align, or update curriculum. When a teacher leaves, curriculum often leaves with them.</div>
+        </div>
+        <div class="finding">
+          <div class="finding-lbl">Credential Alignment</div>
+          <div class="finding-title">Inconsistent or informal alignment to industry credentials</div>
+          <div class="finding-desc">No visible mapping of instruction to state CTE standards, NOCTI, or program competencies. Alignment is implicit rather than documented.</div>
+        </div>
+        <div class="callout" style="margin-top:20px;">
+          <div class="callout-lbl">Discovery question</div>
+          <p>"Of what we've found — what resonates most with what you're seeing from your seat?"</p>
+        </div>
+      </div>
+      <div id="02-focus" style="display:none;">
+        <div class="callout blue" style="padding: 22px 26px;">
+          <div class="callout-lbl">Focus Group Finding</div>
+          <p style="font-size: clamp(16px, 1.9vw, 21px); font-weight: 500; line-height: 1.6;">"One thing that came through clearly in focus groups is that newer teachers don't have a shared mental model of what a unit is versus a lesson — they're often working at the lesson level without a larger arc organizing their instruction."</p>
+        </div>
+        <div class="callout" style="margin-top:14px;">
+          <div class="callout-lbl">Why this matters</div>
+          <p>A teacher who doesn't understand what a unit <em>is</em> will fill out a unit plan template like any form — completing fields without the understanding that makes them meaningful. This is why the professional learning component is structural, not optional.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 THE BRIDGE -->
+    <section class="section" id="s03">
+      <div class="eyebrow">Section 03 · 5 min</div>
+      <div class="sec-title">The Bridge</div>
+      <div class="sec-sub">Connect what was found to what we're proposing. Keep this under 5 minutes.</div>
+      <div class="callout" style="margin-bottom:24px;">
+        <div class="callout-lbl">Mirror back first</div>
+        <p>Reflect what the director said in 1–2 sentences, then name the two-part response.</p>
+      </div>
+      <div class="pillar-pair">
+        <div class="pillar-box blue">
+          <div class="pb-num">Pillar 1</div>
+          <div class="pb-title">Curriculum Infrastructure</div>
+          <div class="pb-desc">A structured, consistent home for curriculum across all three campuses — visible to leadership, aligned to competencies, designed to be updated rather than filed away.</div>
+        </div>
+        <div class="pillar-box teal">
+          <div class="pb-num">Pillar 2</div>
+          <div class="pb-title">Writing Protocol + Teacher Learning</div>
+          <div class="pb-desc">A shared process for how curriculum gets built — with the professional learning designed in, not added on top.</div>
+        </div>
+      </div>
+      <div class="callout amber">
+        <div class="callout-lbl">Parallel district work — one sentence only</div>
+        <p>"We're actively building this with a comparable district right now — which means we're not theorizing. We're refining this in practice."</p>
+      </div>
+    </section>
+
+    <!-- 04A PILLAR 1 INFRASTRUCTURE -->
+    <section class="section" id="s04a">
+      <div class="eyebrow">Section 04a · 8 min</div>
+      <div class="sec-title">Pillar 1 — Curriculum Infrastructure</div>
+      <div class="sec-sub">Where curriculum lives. The structure is non-negotiable. The platform is a decision.</div>
+      <div class="non-neg">
+        <div class="non-neg-lbl">Non-negotiable</div>
+        <p>Regardless of which option is chosen: the template structure, competency alignment logic, and naming conventions stay consistent. These travel across any platform.</p>
+      </div>
+      <div class="rec-row">
+        <button class="rec-btn" id="rb4a" onclick="toggleRec('4a')">Show Recommendation</button>
+      </div>
+      <div class="rec-box" id="rbox4a">
+        <p><strong>Start with Option A or B</strong> — whichever matches your current platform appetite — with a clear intention to migrate to Option C once the writing process is established and the model is proven. Starting with a platform before the process is solid risks an expensive empty shell.</p>
+      </div>
+      <div class="card-grid">
+        <div class="opt-card gray" id="c4aA" onclick="toggleCard('4aA')">
+          <div class="opt-hdr"><span class="opt-badge">Option A</span></div>
+          <div class="opt-body">
+            <div class="opt-name">Low-Tech</div>
+            <div class="opt-desc">Google Drive / Microsoft 365</div>
+            <ul class="opt-bullets">
+              <li>Structured folder architecture</li>
+              <li>Standardized naming conventions</li>
+              <li>Master alignment tracker (spreadsheet)</li>
+              <li>Tools teachers already use</li>
+            </ul>
+          </div>
+          <div class="expand-hint" id="eh4aA">Details ↓</div>
+          <div class="opt-detail">
+            <div class="pc-grid">
+              <div class="pc-col pros"><h5>Pros</h5><ul><li>Zero additional cost</li><li>No learning curve</li><li>Immediately deployable</li></ul></div>
+              <div class="pc-col cons"><h5>Cons</h5><ul><li>Degrades without maintenance</li><li>No alignment reporting</li><li>Manual version control</li></ul></div>
+            </div>
+            <div class="best-fit"><strong>Best fit:</strong> Budget constrained, or proving the model before platform investment.</div>
+          </div>
+        </div>
+        <div class="opt-card blue rec" id="c4aB" onclick="toggleCard('4aB')">
+          <div class="opt-hdr"><span class="opt-badge">Option B</span><span class="rec-tag" id="rt4aB">Recommended</span></div>
+          <div class="opt-body">
+            <div class="opt-name">Mid-Tech</div>
+            <div class="opt-desc">Notion / Airtable or similar</div>
+            <ul class="opt-bullets">
+              <li>Relational workspace — units + competencies linked</li>
+              <li>Cross-campus dashboard visibility</li>
+              <li>Low cost, free tiers available</li>
+              <li>Flexible as the model evolves</li>
+            </ul>
+          </div>
+          <div class="expand-hint" id="eh4aB">Details ↓</div>
+          <div class="opt-detail">
+            <div class="pc-grid">
+              <div class="pc-col pros"><h5>Pros</h5><ul><li>Low/no cost to start</li><li>Relational cross-referencing</li><li>Visually navigable</li></ul></div>
+              <div class="pc-col cons"><h5>Cons</h5><ul><li>Requires someone to maintain</li><li>Not purpose-built for curriculum</li><li>Onboarding required</li></ul></div>
+            </div>
+            <div class="best-fit"><strong>Best fit:</strong> Some internal tech capacity; want more power without full platform commitment.</div>
+          </div>
+        </div>
+        <div class="opt-card teal" id="c4aC" onclick="toggleCard('4aC')">
+          <div class="opt-hdr"><span class="opt-badge">Option C</span></div>
+          <div class="opt-body">
+            <div class="opt-name">Purpose-Built Platform</div>
+            <div class="opt-desc">Atlas, Chalk, Toddle, Curriculum Trak</div>
+            <ul class="opt-bullets">
+              <li>Built-in competency alignment + reporting</li>
+              <li>Cross-campus visibility by design</li>
+              <li>Teacher-facing curriculum authoring</li>
+              <li>Highest long-term ceiling</li>
+            </ul>
+          </div>
+          <div class="expand-hint" id="eh4aC">Details ↓</div>
+          <div class="opt-detail">
+            <div class="pc-grid">
+              <div class="pc-col pros"><h5>Pros</h5><ul><li>Purpose-designed for this</li><li>Sustainable without heavy maintenance</li><li>Leadership reporting built in</li></ul></div>
+              <div class="pc-col cons"><h5>Cons</h5><ul><li>Real per-seat cost</li><li>Onboarding effort required</li><li>Overkill before process is solid</li></ul></div>
+            </div>
+            <div class="best-fit"><strong>Best fit:</strong> Ready for platform investment; scalability and leadership reporting are priorities.</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:4px;">
+        <button class="tbtn teal-active" onclick="go('04b')">Next → Pillar 2: Protocol + PD</button>
+      </div>
+    </section>
+
+    <!-- 04B PILLAR 2 PROTOCOL + PD -->
+    <section class="section" id="s04b">
+      <div class="eyebrow">Section 04b · 12 min</div>
+      <div class="sec-title">Pillar 2 — Writing Protocol + Teacher Learning</div>
+      <div class="sec-sub">Even with a home for curriculum, teachers need a shared process — and the PL to use it.</div>
+      <div class="toggle-group">
+        <button class="tbtn active" onclick="tv('04b','opts',this)">Protocol Options</button>
+        <button class="tbtn" onclick="tv('04b','arc',this)">PL Arc</button>
+        <button class="tbtn" onclick="tv('04b','unit',this)">Sample Unit</button>
+      </div>
+
+      <!-- Protocol Options -->
+      <div id="04b-opts">
+        <div class="rec-row">
+          <button class="rec-btn" id="rb4b" onclick="toggleRec('4b')">Show Recommendation</button>
+        </div>
+        <div class="rec-box" id="rbox4b">
+          <p><strong>Option B — the DACUM/UbD hybrid — is our recommendation for a CTC context.</strong> It meets CTE teachers where they already live intellectually, builds on the DACUM tradition occupational education has trusted for decades, and adds the pedagogical architecture that SREB and accreditation contexts require.</p>
+        </div>
+        <div class="card-grid">
+          <div class="opt-card gray" id="c4bA" onclick="toggleCard('4bA')">
+            <div class="opt-hdr"><span class="opt-badge">Option A</span></div>
+            <div class="opt-body">
+              <div class="opt-name">DACUM-Primary</div>
+              <div class="opt-desc">Task analysis forward; UbD concepts introduced lightly</div>
+              <ul class="opt-bullets">
+                <li>Starts with occupational task analysis</li>
+                <li>Tasks cluster into units, map to credentials</li>
+                <li>Performance-based assessments</li>
+                <li>Lower conceptual lift</li>
+              </ul>
+            </div>
+            <div class="expand-hint" id="eh4bA">Details ↓</div>
+            <div class="opt-detail">
+              <div class="pc-grid">
+                <div class="pc-col pros"><h5>Pros</h5><ul><li>Meets teachers where they think</li><li>Familiar for vocational programs</li><li>Fastest to produce units</li></ul></div>
+                <div class="pc-col cons"><h5>Cons</h5><ul><li>Can be thin on transfer</li><li>Less satisfying to SREB expectations</li><li>Less defensible pedagogically</li></ul></div>
+              </div>
+              <div class="best-fit"><strong>Best fit:</strong> Teachers skeptical of education frameworks; speed is priority; highly skills-intensive programs.</div>
+            </div>
+          </div>
+          <div class="opt-card teal rec" id="c4bB" onclick="toggleCard('4bB')">
+            <div class="opt-hdr"><span class="opt-badge">Option B</span><span class="rec-tag" id="rt4bB">Recommended</span></div>
+            <div class="opt-body">
+              <div class="opt-name">DACUM / UbD Hybrid</div>
+              <div class="opt-desc">DACUM gives the what. UbD gives the how and why.</div>
+              <ul class="opt-bullets">
+                <li>Task analysis provides the skeleton</li>
+                <li>UbD architecture on top — enduring understandings, performance assessment</li>
+                <li>Industry-grounded, pedagogically coherent</li>
+                <li>Defensible in SREB + accreditation contexts</li>
+              </ul>
+            </div>
+            <div class="expand-hint" id="eh4bB">Details ↓</div>
+            <div class="opt-detail">
+              <div class="pc-grid">
+                <div class="pc-col pros"><h5>Pros</h5><ul><li>Meets teachers where they are</li><li>Satisfies CTE + instructional quality standards</li><li>Answers "why does this matter in the field?"</li><li>Defensible externally</li></ul></div>
+                <div class="pc-col cons"><h5>Cons</h5><ul><li>More facilitation skill required</li><li>Requires foundational PL session first</li><li>Takes longer than Option A</li></ul></div>
+              </div>
+              <div class="best-fit"><strong>Best fit:</strong> Goal is curriculum that is both vocationally credible and instructionally coherent. Recommended for most CTC programs.</div>
+            </div>
+          </div>
+          <div class="opt-card blue" id="c4bC" onclick="toggleCard('4bC')">
+            <div class="opt-hdr"><span class="opt-badge">Option C</span></div>
+            <div class="opt-body">
+              <div class="opt-name">UbD-Primary</div>
+              <div class="opt-desc">Full backward design with CTE adaptations</div>
+              <ul class="opt-bullets">
+                <li>Enduring understandings from industry standards</li>
+                <li>Essential questions in industry-relevant language</li>
+                <li>Most pedagogically coherent output</li>
+                <li>Highest conceptual lift</li>
+              </ul>
+            </div>
+            <div class="expand-hint" id="eh4bC">Details ↓</div>
+            <div class="opt-detail">
+              <div class="pc-grid">
+                <div class="pc-col pros"><h5>Pros</h5><ul><li>Most pedagogically coherent</li><li>Strong instructional quality alignment</li><li>Deepest curriculum thinking</li></ul></div>
+                <div class="pc-col cons"><h5>Cons</h5><ul><li>Can feel abstract to trades teachers</li><li>Highest conceptual lift</li><li>Risk of alienating skeptical teachers</li></ul></div>
+              </div>
+              <div class="best-fit"><strong>Best fit:</strong> Teachers have prior UbD exposure; academically-adjacent programs (Health Sciences, IT, Business).</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PL Arc -->
+      <div id="04b-arc" style="display:none;">
+        <div class="callout teal" style="margin-bottom:22px;">
+          <div class="callout-lbl">Design principle</div>
+          <p>Teachers build understanding by doing the work. The professional learning and the curriculum writing are the same activity — not training followed by writing.</p>
+        </div>
+        <div class="arc-wrap">
+          <div class="arc-phase">
+            <div class="arc-box">
+              <div class="arc-num">Phase 1</div>
+              <div class="arc-title">Foundational PD Session</div>
+              <div class="arc-desc">Build shared vocabulary. Establish the unit/lesson relationship. Connect DACUM task analysis to unit architecture. Review the exemplar.</div>
+              <div class="arc-time">~2–3 hours, facilitated</div>
+            </div>
+          </div>
+          <div class="arc-arrow">→</div>
+          <div class="arc-phase">
+            <div class="arc-box">
+              <div class="arc-num">Phase 2</div>
+              <div class="arc-title">Task Analysis</div>
+              <div class="arc-desc">DACUM-informed session with teachers + industry partners. Generate a verified task inventory organized by duty area. Map to credential frameworks.</div>
+              <div class="arc-time">~3 hours</div>
+            </div>
+          </div>
+          <div class="arc-arrow">→</div>
+          <div class="arc-phase">
+            <div class="arc-box">
+              <div class="arc-num">Phase 3</div>
+              <div class="arc-title">Collaborative Unit Writing</div>
+              <div class="arc-desc">Teachers draft units using the chosen protocol with facilitation support. Every session ends with something written — no one leaves empty-handed.</div>
+              <div class="arc-time">Multiple sessions, ~2–3 hrs each</div>
+            </div>
+          </div>
+          <div class="arc-arrow">→</div>
+          <div class="arc-phase">
+            <div class="arc-box">
+              <div class="arc-num">Phase 4</div>
+              <div class="arc-title">Housing + Sustainability</div>
+              <div class="arc-desc">Finished units placed into infrastructure. Teacher leaders take ownership — updating units, onboarding new colleagues, running future task analyses.</div>
+              <div class="arc-time">Ongoing</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sample Unit -->
+      <div id="04b-unit" style="display:none;">
+        <div class="callout" style="margin-bottom:18px;">
+          <div class="callout-lbl">What this is</div>
+          <p>The tangible output of the writing protocol — what a finished unit plan looks like. This template works regardless of which infrastructure option is chosen.</p>
+        </div>
+        <div class="unit-header-grid">
+          <div><div class="uh-field-lbl">Unit Title</div><div class="uh-field-val">Safe and Professional Practice in the Field</div></div>
+          <div><div class="uh-field-lbl">Program Area</div><div class="uh-field-val">[CTE Program Area]</div></div>
+          <div><div class="uh-field-lbl">Unit Number</div><div class="uh-field-val">Unit 2 of 8</div></div>
+          <div><div class="uh-field-lbl">Duration</div><div class="uh-field-val">10 class periods</div></div>
+        </div>
+        <div class="unit-stage">
+          <div class="us-hdr">Stage 1 — Desired Results</div>
+          <div class="us-body">
+            <div class="us-field"><div class="us-lbl">Competency Cluster</div><div class="us-val">Duty Area B — Workplace Readiness / Tasks B1–B6</div></div>
+            <div class="us-field"><div class="us-lbl">Enduring Understanding</div><div class="us-val">Safe, professional practice is not a separate layer added onto technical work — it is built into how skilled practitioners approach every task, every time.</div></div>
+            <div class="us-field"><div class="us-lbl">Essential Questions</div><div class="us-val"><ul style="padding-left:16px;line-height:1.7;"><li>What does it actually mean to work like a professional — and how would you know if you were?</li><li>Why do industry standards exist, and what happens when they aren't followed?</li></ul></div></div>
+          </div>
+        </div>
+        <div class="unit-stage">
+          <div class="us-hdr">Stage 2 — Assessment Evidence</div>
+          <div class="us-body">
+            <div class="us-field"><div class="us-lbl">Performance Task</div><div class="us-val">Students complete a simulated workplace scenario: given a job setup with 3–4 intentional safety and documentation gaps, they identify each issue, correct what they can, document what needs escalation, and complete the associated work order.</div></div>
+          </div>
+        </div>
+        <div class="unit-stage">
+          <div class="us-hdr">Stage 3 — Learning Plan (summary)</div>
+          <div class="us-body">
+            <div style="font-size:12px;color:var(--slate-500);margin-bottom:8px;">10 lessons: Introduction → Skill-building → Application → Performance Task</div>
+            <div style="display:grid;grid-template-columns:auto 1fr auto;gap:5px 12px;font-size:12px;color:var(--slate-600);">
+              <span style="color:var(--slate-400);">L1</span><span>What Does Professional Practice Look Like?</span><span style="color:var(--slate-400);">Intro</span>
+              <span style="color:var(--slate-400);">L2–5</span><span>Safety, PPE, Workplace Documentation</span><span style="color:var(--slate-400);">Skill-building</span>
+              <span style="color:var(--slate-400);">L7–9</span><span>Communication + Peer Walk-Through</span><span style="color:var(--slate-400);">Application</span>
+              <span style="color:var(--slate-400);">L10</span><span>Performance Task — Simulated Scenario</span><span style="color:var(--slate-400);">Assessment</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 DISCUSSION -->
+    <section class="section" id="s05">
+      <div class="eyebrow">Section 05 · 10 min</div>
+      <div class="sec-title">Reaction + Discussion</div>
+      <div class="discussion-prompt">"What's landing?<br><span style="color:var(--slate-300);">  —  </span>What questions does this raise?"</div>
+      <div style="text-align:center;margin-bottom:24px;">
+        <button class="tbtn" id="obj-btn" onclick="toggleObj()">Show facilitator notes</button>
+      </div>
+      <div class="obj-table" id="obj-table">
+        <div class="obj-lbl">Anticipated objections + responses</div>
+        <div class="obj-row"><div class="obj-q">"Teachers are already stretched."</div><div class="obj-a">The PL arc is designed to happen in the context of doing real work — not in addition to it. Teachers leave with actual curriculum, not just training.</div></div>
+        <div class="obj-row"><div class="obj-q">"What does this cost?"</div><div class="obj-a">Have rough platform cost ranges ready. Process cost is CCIU team time. Offer to follow up with a detailed breakdown.</div></div>
+        <div class="obj-row"><div class="obj-q">"How long does this take?"</div><div class="obj-a">A pilot through one program can produce finished unit plans within a semester if structured well.</div></div>
+        <div class="obj-row"><div class="obj-q">"We already have curriculum somewhere."</div><div class="obj-a">Acknowledge it — and reference the audit artifacts as evidence of what "somewhere" looks like in practice.</div></div>
+        <div class="obj-row"><div class="obj-q">"Will teachers actually use this?"</div><div class="obj-a">The PL arc is designed so teachers build the curriculum themselves — it's theirs, not something handed down.</div></div>
+      </div>
+    </section>
+
+    <!-- 06 DECISIONS -->
+    <section class="section" id="s06">
+      <div class="eyebrow">Section 06 · 7 min</div>
+      <div class="sec-title">Decisions</div>
+      <div class="sec-sub">"We're not asking you to decide everything today — but it would help to know where your head is on two things."</div>
+      <div class="dec-section">
+        <div class="dec-lbl">Question 1</div>
+        <div class="dec-title">Infrastructure appetite — where does this start?</div>
+        <div class="sel-group">
+          <button class="sel-btn" onclick="pick(this,'infra')">Option A — Low-Tech</button>
+          <button class="sel-btn" onclick="pick(this,'infra')">Option B — Mid-Tech</button>
+          <button class="sel-btn" onclick="pick(this,'infra')">Option C — Purpose-Built</button>
+          <button class="sel-btn" onclick="pick(this,'infra')">Not sure yet</button>
+        </div>
+      </div>
+      <hr class="divider">
+      <div class="dec-section">
+        <div class="dec-lbl">Question 2</div>
+        <div class="dec-title">Pilot starting point — which program and campus?</div>
+        <div class="sel-group">
+          <button class="sel-btn" onclick="pick(this,'prog')">[Program TBD]</button>
+          <button class="sel-btn" onclick="pick(this,'prog')">Building Trades</button>
+          <button class="sel-btn" onclick="pick(this,'prog')">Health Sciences</button>
+          <button class="sel-btn" onclick="pick(this,'prog')">Information Technology</button>
+          <button class="sel-btn" onclick="pick(this,'prog')">Other</button>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:20px;">
+        <div class="callout-lbl">Facilitation note</div>
+        <p>These are visual anchors for a verbal conversation — not a form. Note decisions separately. Goal: at least one directional answer before leaving.</p>
+      </div>
+    </section>
+
+    <!-- 07 NEXT STEPS -->
+    <section class="section" id="s07">
+      <div class="eyebrow">Section 07 · 5 min</div>
+      <div class="sec-title">Next Steps + Close</div>
+      <div class="ns-box">
+        <div class="ns-tag">Proposed next step</div>
+        <div class="ns-title">[Program Area] Curriculum Working Session — Pilot</div>
+        <div class="ns-desc">A 2.5–3 hour session with 2–3 teachers. Produces two outputs: a task inventory for the program area and a draft unit plan for one duty area cluster.</div>
+        <div class="callout teal" style="margin-bottom:0;">
+          <p>"This gives you something real to react to before any larger commitment is made — and gives your teachers a first experience of the process."</p>
+        </div>
+      </div>
+      <div class="card-pair">
+        <div class="card">
+          <div class="card-lbl">Confirm before leaving</div>
+          <ul class="check-list">
+            <li>□ &nbsp;Who owns what between now and then</li>
+            <li>□ &nbsp;Timeline for the working session</li>
+            <li>□ &nbsp;Information needed from the director's side</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-lbl">Leave-behinds</div>
+          <ul class="lb-list">
+            <li>Printed agenda</li>
+            <li>Sample unit plan template</li>
+            <li>Infrastructure options one-pager</li>
+            <li>Proposed working session agenda</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+const SEC = ['01','02','03','04a','04b','05','06','07'];
+const NAV_IDS = { '01':'n01','02':'n02','03':'n03','04a':'n04a','04b':'n04b','05':'n05','06':'n06','07':'n07' };
+const PARENT_NAV = { '04a':'n04','04b':'n04' };
+const LABELS = { '01':'Welcome + Agenda','02':'What We Know','03':'The Bridge','04a':'Framework — Pillar 1','04b':'Framework — Pillar 2','05':'Discussion','06':'Decisions','07':'Next Steps' };
+let cur = '01';
+const visited = new Set();
+
+function go(id) {
+  document.getElementById('s'+cur.replace('0a','04a').replace('0b','04b')).classList.remove('active');
+  const oldNav = document.getElementById(NAV_IDS[cur]);
+  if (oldNav) { oldNav.classList.remove('current'); oldNav.classList.add('visited'); }
+  const oldParent = PARENT_NAV[cur] ? document.getElementById(PARENT_NAV[cur]) : null;
+  if (oldParent) oldParent.classList.add('visited');
+  visited.add(cur);
+
+  cur = id;
+  const secEl = document.getElementById('s'+id);
+  if (secEl) { secEl.classList.add('active'); secEl.closest('main').scrollTop = 0; }
+  const newNav = document.getElementById(NAV_IDS[id]);
+  if (newNav) { newNav.classList.add('current'); newNav.classList.remove('visited'); }
+  const newParent = PARENT_NAV[id] ? document.getElementById(PARENT_NAV[id]) : null;
+  if (newParent) { newParent.classList.add('current'); newParent.classList.remove('visited'); }
+  document.getElementById('hdr-sec').textContent = LABELS[id] || '';
+}
+
+function tv(sec, view, btn) {
+  const prefix = sec;
+  document.querySelectorAll('[id^="'+prefix+'-"]').forEach(el => el.style.display = 'none');
+  const target = document.getElementById(prefix+'-'+view);
+  if (target) target.style.display = 'block';
+  btn.closest('.toggle-group').querySelectorAll('.tbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function toggleCard(id) {
+  const card = document.getElementById('c'+id);
+  const hint = document.getElementById('eh'+id);
+  const isOpen = card.classList.toggle('open');
+  if (hint) hint.textContent = isOpen ? 'Details ↑' : 'Details ↓';
+}
+
+function toggleRec(pillar) {
+  const btn = document.getElementById('rb'+pillar);
+  const box = document.getElementById('rbox'+pillar);
+  const tag = document.getElementById('rt'+pillar+'B');
+  const on = btn.classList.toggle('on');
+  box.classList.toggle('on', on);
+  btn.textContent = on ? 'Hide Recommendation' : 'Show Recommendation';
+  if (tag) tag.classList.toggle('on', on);
+}
+
+function toggleObj() {
+  const t = document.getElementById('obj-table');
+  const b = document.getElementById('obj-btn');
+  const on = t.classList.toggle('on');
+  b.textContent = on ? 'Hide facilitator notes' : 'Show facilitator notes';
+  b.classList.toggle('active', on);
+}
+
+function pick(btn, group) {
+  btn.closest('.sel-group').querySelectorAll('.sel-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+document.getElementById('n01').classList.add('current');
+</script>
+</body>
+</html>
