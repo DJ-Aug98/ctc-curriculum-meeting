@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CTC Curriculum Infrastructure — Director Meeting</title>
+<title>LLS | CTE Curriculum Brainstorming</title>
 <style>
 :root {
   --blue: #2563EB;
@@ -36,27 +36,33 @@ body { font-family: var(--font); background: var(--slate-100); color: var(--slat
 /* ── HEADER ── */
 header {
   background: var(--slate-900);
-  padding: 0 32px;
-  height: 54px;
+  padding: 0 28px;
+  height: 58px;
   display: flex;
   align-items: center;
   gap: 0;
   flex-shrink: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
-.hdr-logo {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--slate-500);
-  padding-right: 20px;
-  border-right: 1px solid var(--slate-700);
-  margin-right: 20px;
+.hdr-logo-img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  opacity: 0.9;
+}
+.hdr-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--slate-700);
+  margin: 0 20px;
+  flex-shrink: 0;
 }
 .hdr-title {
   font-size: clamp(12px, 1.3vw, 14px);
-  font-weight: 500;
-  color: var(--slate-400);
+  font-weight: 600;
+  color: var(--slate-300);
+  letter-spacing: 0.01em;
 }
 
 /* ── TAB BAR ── */
@@ -106,9 +112,9 @@ header {
 #p1 {
   background: var(--slate-900);
   align-items: center;
-  justify-content: center;
-  padding: 48px 40px;
-  gap: 48px;
+  padding: 56px 40px 48px;
+  gap: 40px;
+  overflow-y: auto;
 }
 
 .idea-frame {
@@ -510,8 +516,9 @@ header {
 <body>
 
 <header>
-  <div class="hdr-logo">CCIU</div>
-  <div class="hdr-title">CTC Curriculum — Director Meeting</div>
+  <img class="hdr-logo-img" src="../assets/cciu_logo copy.png" alt="CCIU">
+  <div class="hdr-divider"></div>
+  <div class="hdr-title">LLS &nbsp;|&nbsp; CTE Curriculum Brainstorming</div>
 </header>
 
 <div class="tab-bar">
@@ -770,10 +777,6 @@ header {
           </div>
           <div class="cmp-opt-desc">Highest ceiling, least maintenance. Makes most sense once a writing process exists and the investment is justified.</div>
         </div>
-        <div class="cmp-footer">
-          <div class="cmp-footer-lbl">A question for the room</div>
-          <div class="cmp-footer-text">What level of infrastructure investment feels right for where things are right now — and what would change that answer?</div>
-        </div>
       </div>
     </div>
   </div>
@@ -984,10 +987,6 @@ header {
           </div>
           <div class="cmp-opt-desc">Full backward design. Most rigorous output. Highest lift. Best fit where teachers have some UbD familiarity already.</div>
         </div>
-        <div class="cmp-footer">
-          <div class="cmp-footer-lbl">A question for the room</div>
-          <div class="cmp-footer-text">Where are the teachers who would be in the room for this work — and which protocol actually meets them there?</div>
-        </div>
       </div>
     </div>
   </div>
@@ -1184,10 +1183,6 @@ header {
             <span class="cmp-tag viewing-violet" id="ct4C" style="display:none;">Viewing</span>
           </div>
           <div class="cmp-opt-desc">What a first working session produces, what it requires, and what decisions need to be made to schedule it.</div>
-        </div>
-        <div class="cmp-footer">
-          <div class="cmp-footer-lbl">A question for the room</div>
-          <div class="cmp-footer-text">Which program area and which teachers would be the right starting point for a pilot — and what would make that decision easier?</div>
         </div>
       </div>
     </div>
