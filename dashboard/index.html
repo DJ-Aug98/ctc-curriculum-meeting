@@ -107,9 +107,38 @@ header {
 .tab.t5.active { color: white; border-bottom-color: var(--amber-bd); }
 
 /* ── CONTENT ── */
-.content { flex: 1; overflow: hidden; display: flex; }
-.panel { display: none; flex: 1; overflow-y: auto; }
-.panel.active { display: flex; flex-direction: column; }
+.content { flex: 1; overflow: hidden; position: relative; }
+.panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.97);
+  z-index: 0;
+}
+.panel.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+  z-index: 1;
+  animation: panelIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.panel.leaving {
+  animation: panelOut 0.28s ease forwards;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes panelIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes panelOut {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.98); }
+}
 
 /* ═══════════════════════════════════════
    TAB 0:VISION / LANDING
@@ -290,7 +319,7 @@ header {
 /* ═══════════════════════════════════════
    TABS 2, 3, 4:SHARED LAYOUT
 ═══════════════════════════════════════ */
-#p2, #p3, #p4, #p5 { flex-direction: row; overflow: hidden; }
+#p2, #p3, #p4, #p5 { flex-direction: row; overflow: hidden; overflow-y: hidden; }
 
 /* Sidebar */
 .opt-sidebar {
@@ -1135,8 +1164,21 @@ header {
 
 <script>
 function switchTab(n) {
-  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i === n));
-  document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i === n));
+  const panels = document.querySelectorAll('.panel');
+  const tabs   = document.querySelectorAll('.tab');
+
+  // Animate outgoing panel
+  panels.forEach(p => {
+    if (p.classList.contains('active')) {
+      p.classList.remove('active');
+      p.classList.add('leaving');
+      setTimeout(() => p.classList.remove('leaving'), 300);
+    }
+  });
+
+  // Activate incoming panel
+  tabs.forEach((t,i) => t.classList.toggle('active', i === n));
+  panels[n].classList.add('active');
 }
 
 function switchOpt(tab, opt, btn) {
