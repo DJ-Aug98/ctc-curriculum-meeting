@@ -6,16 +6,20 @@
 <title>LLS | CTE Curriculum Brainstorming</title>
 <style>
 :root {
-  --blue: #2563EB;
-  --blue-lt: #EFF6FF;
-  --blue-bd: #BFDBFE;
-  --blue-dk: #1E40AF;
-  --teal: #0D9488;
-  --teal-lt: #F0FDFA;
-  --teal-bd: #5EEAD4;
-  --violet: #7C3AED;
-  --violet-lt: #F5F3FF;
-  --violet-bd: #DDD6FE;
+  --blue: #004f71;
+  --blue-lt: #e6f2f7;
+  --blue-bd: #8dc8e8;
+  --blue-dk: #003352;
+  --teal: #0d5257;
+  --teal-lt: #e4f0f0;
+  --teal-bd: #49c5b1;
+  --violet: #8246af;
+  --violet-lt: #f0eaf7;
+  --violet-bd: #d7c6e6;
+  --amber: #e56a54;
+  --amber-lt: #fff0ee;
+  --amber-bd: #ffb3ab;
+  --crimson: #8a1e41;
   --slate-50:  #F8FAFC;
   --slate-100: #F1F5F9;
   --slate-200: #E2E8F0;
@@ -35,7 +39,7 @@ body { font-family: var(--font); background: var(--slate-100); color: var(--slat
 
 /* ── HEADER ── */
 header {
-  background: var(--slate-900);
+  background: var(--blue);
   padding: 0 28px;
   height: 58px;
   display: flex;
@@ -54,7 +58,7 @@ header {
 .hdr-divider {
   width: 1px;
   height: 28px;
-  background: var(--slate-700);
+  background: rgba(255,255,255,0.25);
   margin: 0 20px;
   flex-shrink: 0;
 }
@@ -67,18 +71,18 @@ header {
 
 /* ── TAB BAR ── */
 .tab-bar {
-  background: var(--slate-900);
+  background: var(--blue);
   display: flex;
   padding: 0 32px;
   gap: 2px;
   flex-shrink: 0;
-  border-bottom: 1px solid var(--slate-700);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
 }
 .tab {
   padding: 11px 20px;
   font-size: clamp(12px, 1.1vw, 13px);
   font-weight: 600;
-  color: var(--slate-500);
+  color: rgba(255,255,255,0.45);
   cursor: pointer;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
@@ -89,17 +93,18 @@ header {
   align-items: center;
   gap: 8px;
 }
-.tab:hover { color: var(--slate-300); }
+.tab:hover { color: rgba(255,255,255,0.8); }
 .tab-num {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   opacity: 0.5;
 }
 .tab.active .tab-num { opacity: 1; }
-.tab.t1.active { color: white; border-bottom-color: var(--slate-400); }
-.tab.t2.active { color: white; border-bottom-color: var(--blue); }
-.tab.t3.active { color: white; border-bottom-color: var(--teal); }
-.tab.t4.active { color: white; border-bottom-color: var(--violet); }
+.tab.t1.active { color: white; border-bottom-color: rgba(255,255,255,0.6); }
+.tab.t2.active { color: white; border-bottom-color: var(--blue-bd); }
+.tab.t3.active { color: white; border-bottom-color: var(--teal-bd); }
+.tab.t4.active { color: white; border-bottom-color: var(--violet-bd); }
+.tab.t5.active { color: white; border-bottom-color: var(--amber-bd); }
 
 /* ── CONTENT ── */
 .content { flex: 1; overflow: hidden; display: flex; }
@@ -107,19 +112,20 @@ header {
 .panel.active { display: flex; flex-direction: column; }
 
 /* ═══════════════════════════════════════
-   TAB 1 — THE IDEA
+   TAB 1:HOME
 ═══════════════════════════════════════ */
 #p1 {
   background: var(--slate-900);
   align-items: center;
-  padding: 56px 40px 48px;
-  gap: 40px;
+  padding: 56px 40px 56px;
+  gap: 48px;
   overflow-y: auto;
 }
 
 .idea-frame {
-  max-width: 760px;
+  max-width: 680px;
   width: 100%;
+  text-align: center;
 }
 
 .idea-q-label {
@@ -128,90 +134,69 @@ header {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--slate-600);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .idea-q {
-  font-size: clamp(22px, 2.8vw, 32px);
-  font-weight: 700;
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 800;
   color: white;
   line-height: 1.35;
-  margin-bottom: 48px;
+  margin-bottom: 0;
 }
 
 .idea-q em {
   font-style: normal;
-  color: var(--slate-400);
+  color: #49c5b1;
 }
 
 .flow {
   display: grid;
-  grid-template-columns: 1fr 32px 1fr 32px 1fr;
-  align-items: center;
-  gap: 0;
-  max-width: 760px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 780px;
   width: 100%;
 }
 
-.flow-arrow {
-  color: var(--slate-700);
-  font-size: 20px;
-  text-align: center;
-  user-select: none;
-}
+.flow-arrow { display: none; }
 
 .flow-card {
   border-radius: var(--radius);
-  padding: 20px 22px;
+  padding: 28px 26px;
   cursor: pointer;
-  transition: opacity 0.15s;
+  transition: opacity 0.15s, transform 0.12s;
   border: 1.5px solid transparent;
 }
-.flow-card:hover { opacity: 0.85; }
+.flow-card:hover { opacity: 0.85; transform: translateY(-2px); }
 
-.flow-card.blue  { background: rgba(37,99,235,0.12); border-color: rgba(37,99,235,0.3); }
-.flow-card.teal  { background: rgba(13,148,136,0.12); border-color: rgba(13,148,136,0.3); }
-.flow-card.violet{ background: rgba(124,58,237,0.12); border-color: rgba(124,58,237,0.3); }
+.flow-card.blue   { background: rgba(0,79,113,0.35);   border-color: rgba(141,200,232,0.3); }
+.flow-card.teal   { background: rgba(13,82,87,0.35);   border-color: rgba(73,197,177,0.3); }
+.flow-card.violet { background: rgba(60,16,83,0.35);   border-color: rgba(215,198,230,0.3); }
+.flow-card.amber  { background: rgba(138,30,65,0.35);  border-color: rgba(255,179,171,0.3); }
 
 .flow-num {
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 10px;
 }
-.flow-card.blue   .flow-num { color: #60A5FA; }
-.flow-card.teal   .flow-num { color: #2DD4BF; }
-.flow-card.violet .flow-num { color: #A78BFA; }
 
 .flow-title {
-  font-size: clamp(14px, 1.5vw, 17px);
+  font-size: clamp(15px, 1.6vw, 19px);
   font-weight: 700;
   color: white;
-  margin-bottom: 6px;
-  line-height: 1.2;
+  line-height: 1.3;
 }
 
-.flow-desc {
-  font-size: clamp(11px, 1.1vw, 13px);
-  color: var(--slate-400);
-  line-height: 1.6;
-}
-
-.flow-link {
-  font-size: 11px;
-  font-weight: 700;
-  margin-top: 12px;
-  display: inline-block;
-}
-.flow-card.blue   .flow-link { color: #60A5FA; }
-.flow-card.teal   .flow-link { color: #2DD4BF; }
-.flow-card.violet .flow-link { color: #A78BFA; }
+.flow-desc { display: none; }
+.flow-link { display: none; }
 
 /* ═══════════════════════════════════════
-   TABS 2, 3, 4 — SHARED LAYOUT
+   TABS 2, 3, 4:SHARED LAYOUT
 ═══════════════════════════════════════ */
-#p2, #p3, #p4 { flex-direction: row; overflow: hidden; }
+#p2, #p3, #p4, #p5 { flex-direction: row; overflow: hidden; }
 
 /* Sidebar */
 .opt-sidebar {
@@ -228,9 +213,9 @@ header {
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--slate-600);
+  color: rgba(255,255,255,0.4);
   padding: 0 20px 12px;
-  border-bottom: 1px solid var(--slate-800);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
   margin-bottom: 10px;
 }
 .opt-btn {
@@ -243,67 +228,98 @@ header {
   transition: background 0.12s;
   position: relative;
 }
-.opt-btn:hover { background: rgba(255,255,255,0.03); }
-.opt-btn.active { background: rgba(255,255,255,0.06); }
-.opt-btn.active.c-blue   { border-left-color: var(--blue); }
-.opt-btn.active.c-teal   { border-left-color: var(--teal); }
-.opt-btn.active.c-violet { border-left-color: var(--violet); }
+.opt-btn:hover { background: rgba(255,255,255,0.06); }
+.opt-btn.active { background: rgba(255,255,255,0.12); }
+.opt-btn.active.c-blue   { border-left-color: var(--blue-bd); }
+.opt-btn.active.c-teal   { border-left-color: var(--teal-bd); }
+.opt-btn.active.c-violet { border-left-color: var(--violet-bd); }
+.opt-btn.active.c-amber  { border-left-color: var(--amber-bd); }
 
 .opt-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  border: 2px solid var(--slate-700);
+  border: 2px solid rgba(255,255,255,0.25);
   margin-top: 5px;
   flex-shrink: 0;
   transition: all 0.12s;
 }
-.opt-btn.active.c-blue   .opt-dot { background: var(--blue);   border-color: var(--blue); }
-.opt-btn.active.c-teal   .opt-dot { background: var(--teal);   border-color: var(--teal); }
-.opt-btn.active.c-violet .opt-dot { background: var(--violet); border-color: var(--violet); }
+.opt-btn.active.c-blue   .opt-dot { background: var(--blue-bd);   border-color: var(--blue-bd); }
+.opt-btn.active.c-teal   .opt-dot { background: var(--teal-bd);   border-color: var(--teal-bd); }
+.opt-btn.active.c-violet .opt-dot { background: var(--violet-bd); border-color: var(--violet-bd); }
+.opt-btn.active.c-amber  .opt-dot { background: var(--amber-bd);  border-color: var(--amber-bd); }
 
 .opt-btn-letter {
+  display: none;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--slate-600);
+  color: rgba(255,255,255,0.4);
   margin-bottom: 2px;
 }
-.opt-btn.active .opt-btn-letter { color: var(--slate-500); }
+.opt-btn.active .opt-btn-letter { color: rgba(255,255,255,0.65); }
 .opt-btn-name {
   font-size: clamp(12px, 1.1vw, 13px);
   font-weight: 600;
-  color: var(--slate-500);
+  color: rgba(255,255,255,0.55);
   line-height: 1.3;
 }
 .opt-btn.active .opt-btn-name { color: white; }
 .opt-btn-sub {
   font-size: 11px;
-  color: var(--slate-700);
+  color: rgba(255,255,255,0.3);
   margin-top: 2px;
   line-height: 1.3;
 }
-.opt-btn.active .opt-btn-sub { color: var(--slate-500); }
+.opt-btn.active .opt-btn-sub { color: rgba(255,255,255,0.55); }
 
 .sidebar-note {
   margin-top: auto;
   padding: 18px 20px 0;
-  border-top: 1px solid var(--slate-800);
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 .sidebar-note-lbl {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--slate-700);
+  color: rgba(255,255,255,0.35);
   margin-bottom: 6px;
 }
 .sidebar-note-text {
   font-size: 11px;
-  color: var(--slate-600);
+  color: rgba(255,255,255,0.45);
   line-height: 1.65;
 }
+
+/* ── PER-PANEL SIDEBAR COLORS ── */
+#p2 .opt-sidebar { background: var(--blue); }
+#p3 .opt-sidebar { background: var(--teal); }
+#p4 .opt-sidebar { background: #3c1053; }
+#p5 .opt-sidebar { background: var(--crimson); }
+
+/* ── PER-PANEL DETAIL TINTS ── */
+#p2 .detail-pane { background: var(--blue-lt); }
+#p3 .detail-pane { background: var(--teal-lt); }
+#p4 .detail-pane { background: var(--violet-lt); }
+#p5 .detail-pane { background: var(--amber-lt); }
+
+/* ── PER-PANEL CARD ACCENTS ── */
+#p2 .d-card { border-color: var(--blue-bd); }
+#p3 .d-card { border-color: var(--teal-bd); }
+#p4 .d-card { border-color: var(--violet-bd); }
+#p5 .d-card { border-color: var(--amber-bd); }
+
+#p2 .d-card-lbl { color: var(--blue); }
+#p3 .d-card-lbl { color: var(--teal); }
+#p4 .d-card-lbl { color: var(--violet); }
+#p5 .d-card-lbl { color: var(--crimson); }
+
+#p2 .d-eyebrow { color: var(--blue); }
+#p3 .d-eyebrow { color: var(--teal); }
+#p4 .d-eyebrow { color: var(--violet); }
+#p5 .d-eyebrow { color: var(--crimson); }
 
 /* Main area */
 .opt-main { flex: 1; display: flex; overflow: hidden; }
@@ -320,6 +336,7 @@ header {
 
 /* Detail typography */
 .d-eyebrow {
+  display: none;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -328,14 +345,14 @@ header {
   margin-bottom: 6px;
 }
 .d-title {
-  font-size: clamp(20px, 2.3vw, 26px);
+  font-size: clamp(26px, 2.8vw, 36px);
   font-weight: 800;
   color: var(--slate-800);
   margin-bottom: 8px;
   line-height: 1.15;
 }
 .d-sub {
-  font-size: clamp(13px, 1.3vw, 15px);
+  font-size: clamp(16px, 1.5vw, 19px);
   color: var(--slate-500);
   line-height: 1.7;
   margin-bottom: 26px;
@@ -357,7 +374,7 @@ header {
   padding: 16px 18px;
 }
 .d-card-lbl {
-  font-size: 10px;
+  font-size: 22px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -366,7 +383,7 @@ header {
 }
 .d-list { list-style: none; }
 .d-list li {
-  font-size: clamp(12px, 1.2vw, 13px);
+  font-size: clamp(16px, 1.4vw, 18px);
   color: var(--slate-700);
   padding: 5px 0 5px 15px;
   position: relative;
@@ -446,6 +463,7 @@ header {
 .cmp-tag.viewing-blue   { background: var(--blue-lt);   color: var(--blue); }
 .cmp-tag.viewing-teal   { background: var(--teal-lt);   color: var(--teal); }
 .cmp-tag.viewing-violet { background: var(--violet-lt); color: var(--violet); }
+.cmp-tag.viewing-amber  { background: var(--amber-lt);  color: var(--amber); }
 .cmp-opt-desc {
   font-size: 11px;
   color: var(--slate-500);
@@ -490,7 +508,7 @@ header {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--violet);
+  color: var(--blue);
   margin-bottom: 5px;
 }
 .arc-title {
@@ -522,64 +540,53 @@ header {
 </header>
 
 <div class="tab-bar">
-  <div class="tab t1 active" onclick="switchTab(1)"><span class="tab-num">—</span> The Idea</div>
-  <div class="tab t2" onclick="switchTab(2)"><span class="tab-num">01</span> Infrastructure</div>
-  <div class="tab t3" onclick="switchTab(3)"><span class="tab-num">02</span> Protocol</div>
-  <div class="tab t4" onclick="switchTab(4)"><span class="tab-num">03</span> Teacher Learning</div>
+  <div class="tab t1 active" onclick="switchTab(1)">Home</div>
+  <div class="tab t2" onclick="switchTab(2)">Structure</div>
+  <div class="tab t3" onclick="switchTab(3)">Design</div>
+  <div class="tab t4" onclick="switchTab(4)">Build</div>
 </div>
 
 <div class="content">
 
   <!-- ══════════════════════════════════
-       TAB 1 — THE IDEA
+       TAB 1:THE IDEA
   ══════════════════════════════════ -->
   <div class="panel active" id="p1">
 
     <div class="idea-frame">
-      <div class="idea-q-label">A question worth sitting with</div>
+      <div class="idea-q-label">A question for the room</div>
       <div class="idea-q">
-        How might CTE develop a curriculum that is<br>
-        <em>standard, guaranteed, and viable —</em><br>
-        one that every teacher can access and deliver<br>
-        equally across all three campuses?
+        How do we build CTE curriculum that is <em>standard, guaranteed, and viable</em> across all three campuses?
       </div>
     </div>
 
     <div class="flow">
       <div class="flow-card blue" onclick="switchTab(2)">
-        <div class="flow-num">01 — Infrastructure</div>
+        <div class="flow-num">Structure</div>
         <div class="flow-title">Where does curriculum live?</div>
-        <div class="flow-desc">A consistent, visible home for curriculum — organized, accessible, and not locked in any one teacher's binder or hard drive.</div>
-        <div class="flow-link">Explore →</div>
       </div>
 
       <div class="flow-arrow">→</div>
 
       <div class="flow-card teal" onclick="switchTab(3)">
-        <div class="flow-num">02 — Protocol</div>
-        <div class="flow-title">How does curriculum get built?</div>
-        <div class="flow-desc">UbD as the design frame — backward from outcomes. Project Based Learning as the delivery mode within it. Together they produce curriculum that is coherent, authentic, and built by teachers.</div>
-        <div class="flow-link">Explore →</div>
+        <div class="flow-num">Design</div>
+        <div class="flow-title">What is the format of the curriculum?</div>
       </div>
 
-      <div class="flow-arrow">→</div>
-
       <div class="flow-card violet" onclick="switchTab(4)">
-        <div class="flow-num">03 — Teacher Learning</div>
-        <div class="flow-title">How do teachers work within the structure?</div>
-        <div class="flow-desc">CCIU LLS builds the box — the curriculum structure, scope, and sequence. Teachers decide what goes inside — the lessons, activities, and instructional decisions that bring it to life.</div>
-        <div class="flow-link">Explore →</div>
+        <div class="flow-num">Build</div>
+        <div class="flow-title">How does curriculum actually get produced?</div>
       </div>
     </div>
 
   </div>
 
   <!-- ══════════════════════════════════
-       TAB 2 — INFRASTRUCTURE
+       TAB 2:INFRASTRUCTURE
   ══════════════════════════════════ -->
   <div class="panel" id="p2">
     <div class="opt-sidebar">
-      <div class="sidebar-section-title">Infrastructure Options</div>
+      <div class="sidebar-section-title">Structure</div>
 
       <div class="opt-btn c-blue active" onclick="switchOpt(2,'A',this)">
         <div class="opt-dot"></div>
@@ -607,8 +614,8 @@ header {
       </div>
 
       <div class="sidebar-note">
-        <div class="sidebar-note-lbl">What stays consistent</div>
-        <div class="sidebar-note-text">Whichever platform is chosen, the template structure and competency alignment logic travel with it. The platform serves the curriculum — not the other way around.</div>
+        <div class="sidebar-note-lbl">A question for the room</div>
+        <div class="sidebar-note-text" style="font-weight:700; color:rgba(255,255,255,0.75);">How do we build CTE curriculum that is standard, guaranteed, and viable across all three campuses?</div>
       </div>
     </div>
 
@@ -616,206 +623,117 @@ header {
       <div class="detail-pane">
 
         <div class="opt-view active" id="v2A">
-          <div class="d-eyebrow">Option A — Infrastructure</div>
-          <div class="d-title">Low-Tech: Google Drive / Microsoft 365</div>
-          <div class="d-sub">A structured folder architecture with standardized naming conventions, shared template files, and a master alignment tracker in a spreadsheet. Everything lives in tools teachers already have.</div>
+          <div class="d-eyebrow">Option A:Structure</div>
+          <div class="d-title">Low-Tech</div>
+          <div class="d-sub">Structured folders, shared templates, alignment tracker in a spreadsheet. Tools already in use.</div>
           <div class="d-grid">
             <div class="d-card">
-              <div class="d-card-lbl">What it looks like</div>
-              <ul class="d-list items">
-                <li>Folder hierarchy by campus, program, and unit</li>
-                <li>Shared unit plan templates (Docs / Word)</li>
-                <li>Master tracker mapping units to competencies</li>
-                <li>Defined permission levels by role</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">What it requires</div>
-              <ul class="d-list items">
-                <li>Someone to design the folder architecture upfront</li>
-                <li>Naming convention discipline across all users</li>
-                <li>A designated keeper for the master tracker</li>
-                <li>Periodic audits to catch structural drift</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">Easier because</div>
+              <div class="d-card-lbl">+</div>
               <ul class="d-list pros">
                 <li>Zero additional cost</li>
-                <li>No learning curve — tools already in use</li>
+                <li>No learning curve</li>
                 <li>Deployable immediately</li>
               </ul>
             </div>
             <div class="d-card">
-              <div class="d-card-lbl">Harder because</div>
+              <div class="d-card-lbl">−</div>
               <ul class="d-list cons">
-                <li>Structure degrades without active maintenance</li>
-                <li>No built-in reporting or cross-campus visibility</li>
+                <li>Structure lives in human behavior; degrades without maintenance</li>
+                <li>No cross-campus visibility or reporting</li>
                 <li>Version control is manual</li>
               </ul>
             </div>
           </div>
-          <div class="d-callout">
-            <div class="d-callout-lbl">One way to think about it</div>
-            <p>Option A asks people to impose structure on a tool that wasn't designed for it. It works — but the structure lives in human behavior, not in the system. The question to sit with: does the organization have the discipline to maintain that over time, and what happens when people turn over?</p>
-          </div>
         </div>
 
         <div class="opt-view" id="v2B">
-          <div class="d-eyebrow">Option B — Infrastructure</div>
-          <div class="d-title">Mid-Tech: Notion / Airtable or similar</div>
-          <div class="d-sub">A relational workspace where units, competencies, and assessments are linked rather than just filed. Leadership can see curriculum across programs and campuses without a spreadsheet.</div>
+          <div class="d-eyebrow">Option B:Structure</div>
+          <div class="d-title">Mid-Tech</div>
+          <div class="d-sub">Relational workspace: units, competencies, and assessments are linked, not just filed. Leadership visibility across programs and campuses.</div>
           <div class="d-grid">
             <div class="d-card">
-              <div class="d-card-lbl">What it looks like</div>
-              <ul class="d-list items">
-                <li>Relational database linking units, duty areas, and competencies</li>
-                <li>Views filterable by campus, program, or credential</li>
-                <li>Embedded unit plan template fields</li>
-                <li>Leadership view showing curriculum coverage at a glance</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">What it requires</div>
-              <ul class="d-list items">
-                <li>Someone to design and maintain the workspace architecture</li>
-                <li>Onboarding for teachers and administrators</li>
-                <li>Ongoing stewardship as the model evolves</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">Easier because</div>
+              <div class="d-card-lbl">+</div>
               <ul class="d-list pros">
-                <li>Free tiers available; paid tiers modest</li>
-                <li>Relational structure makes cross-referencing possible</li>
-                <li>Flexible enough to grow as the model matures</li>
+                <li>Low cost (free tiers available)</li>
+                <li>Relational structure enables cross-referencing</li>
+                <li>Flexible as the model evolves</li>
               </ul>
             </div>
             <div class="d-card">
-              <div class="d-card-lbl">Harder because</div>
+              <div class="d-card-lbl">−</div>
               <ul class="d-list cons">
-                <li>Not purpose-built for curriculum — workarounds needed</li>
-                <li>Requires internal technical capacity to build</li>
-                <li>Adoption requires intentional onboarding</li>
+                <li>Not purpose-built; workarounds required</li>
+                <li>Requires internal capacity to design and maintain</li>
+                <li>Adoption requires onboarding</li>
               </ul>
             </div>
-          </div>
-          <div class="d-callout">
-            <div class="d-callout-lbl">One way to think about it</div>
-            <p>Option B gives you most of the structural benefit of a purpose-built platform at a fraction of the cost. The catch is that someone has to build and maintain the architecture. If that capacity exists — or can be developed — it's a strong middle path between "folder on a shared drive" and "enterprise software."</p>
           </div>
         </div>
 
         <div class="opt-view" id="v2C">
-          <div class="d-eyebrow">Option C — Infrastructure</div>
+          <div class="d-eyebrow">Option C:Structure</div>
           <div class="d-title">Purpose-Built Platform</div>
-          <div class="d-sub">Dedicated curriculum mapping software designed for exactly this use case — built-in alignment to competency frameworks, cross-campus visibility, teacher-facing authoring, and leadership reporting.</div>
+          <div class="d-sub">Dedicated curriculum mapping software with alignment, cross-campus visibility, and reporting built in. Atlas, Chalk, Toddle, Curriculum Trak.</div>
           <div class="d-grid">
             <div class="d-card">
-              <div class="d-card-lbl">Platforms to consider</div>
-              <ul class="d-list items">
-                <li><strong>Atlas</strong> — strong UbD alignment, cross-campus reporting</li>
-                <li><strong>Chalk</strong> — clean teacher UI, strong CTE competency mapping</li>
-                <li><strong>Curriculum Trak</strong> — purpose-built for CTE, direct competency alignment</li>
-                <li><strong>Toddle</strong> — collaborative unit planning features</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">What it requires</div>
-              <ul class="d-list items">
-                <li>Platform selection and procurement</li>
-                <li>Structured onboarding for teachers and administrators</li>
-                <li>Ongoing vendor relationship</li>
-                <li>A writing process worth housing before investing</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">Easier because</div>
+              <div class="d-card-lbl">+</div>
               <ul class="d-list pros">
-                <li>Built for this purpose — alignment and reporting included</li>
-                <li>Most sustainable long-term without internal maintenance</li>
-                <li>Leadership visibility built in, not bolted on</li>
+                <li>Built for this purpose; alignment and reporting included</li>
+                <li>Highest long-term ceiling</li>
+                <li>Leadership visibility without extra work</li>
               </ul>
             </div>
             <div class="d-card">
-              <div class="d-card-lbl">Harder because</div>
+              <div class="d-card-lbl">−</div>
               <ul class="d-list cons">
-                <li>Real per-seat or institutional licensing cost</li>
+                <li>Real licensing cost</li>
                 <li>Onboarding and change management required</li>
-                <li>A platform with no curriculum in it solves nothing</li>
+                <li>A platform with no curriculum in it solves nothing; process first</li>
               </ul>
             </div>
           </div>
-          <div class="d-callout">
-            <div class="d-callout-lbl">One way to think about it</div>
-            <p>Option C is likely the right long-term home — but possibly not the right starting point. A platform investment before the writing process is established tends to produce an expensive, empty shell. The stronger sequence might be: start with A or B to build and prove the process, then migrate once the investment is justified by what's already in it.</p>
-          </div>
         </div>
 
       </div>
 
-      <div class="compare-pane">
-        <div class="compare-hdr">Comparing Options</div>
-        <div class="cmp-opt">
-          <div class="cmp-opt-row">
-            <div class="cmp-opt-name">A — Low-Tech</div>
-            <span class="cmp-tag viewing-blue" id="ct2A" style="display:none;">Viewing</span>
-          </div>
-          <div class="cmp-opt-desc">Familiar tools, zero cost, deployable now. Structure lives in human behavior — requires discipline to maintain.</div>
-        </div>
-        <div class="cmp-opt">
-          <div class="cmp-opt-row">
-            <div class="cmp-opt-name">B — Mid-Tech</div>
-            <span class="cmp-tag viewing-blue" id="ct2B" style="display:none;">Viewing</span>
-          </div>
-          <div class="cmp-opt-desc">Relational structure, leadership visibility, modest cost. Needs internal capacity to build and maintain.</div>
-        </div>
-        <div class="cmp-opt">
-          <div class="cmp-opt-row">
-            <div class="cmp-opt-name">C — Purpose-Built</div>
-            <span class="cmp-tag viewing-blue" id="ct2C" style="display:none;">Viewing</span>
-          </div>
-          <div class="cmp-opt-desc">Highest ceiling, least maintenance. Makes most sense once a writing process exists and the investment is justified.</div>
-        </div>
-      </div>
     </div>
   </div>
 
   <!-- ══════════════════════════════════
-       TAB 3 — PROTOCOL
+       TAB 3:DESIGN
   ══════════════════════════════════ -->
   <div class="panel" id="p3">
     <div class="opt-sidebar">
-      <div class="sidebar-section-title">Protocol Options</div>
+      <div class="sidebar-section-title">Design</div>
 
       <div class="opt-btn c-teal active" onclick="switchOpt(3,'A',this)">
         <div class="opt-dot"></div>
         <div>
-          <div class="opt-btn-letter">The Frame</div>
-          <div class="opt-btn-name">Understanding by Design</div>
-          <div class="opt-btn-sub">Backward design from outcomes</div>
+          <div class="opt-btn-letter">Option A</div>
+          <div class="opt-btn-name">Competency-First</div>
+          <div class="opt-btn-sub">Start from the state task list</div>
         </div>
       </div>
       <div class="opt-btn c-teal" onclick="switchOpt(3,'B',this)">
         <div class="opt-dot"></div>
         <div>
-          <div class="opt-btn-letter">The Delivery</div>
-          <div class="opt-btn-name">Project Based Learning</div>
-          <div class="opt-btn-sub">Authentic inquiry within the UbD unit</div>
+          <div class="opt-btn-letter">Option B</div>
+          <div class="opt-btn-name">Understanding by Design</div>
+          <div class="opt-btn-sub">Backward design from outcomes</div>
         </div>
       </div>
       <div class="opt-btn c-teal" onclick="switchOpt(3,'C',this)">
         <div class="opt-dot"></div>
         <div>
-          <div class="opt-btn-letter">In Practice</div>
-          <div class="opt-btn-name">UbD + PBL Together</div>
-          <div class="opt-btn-sub">What this looks like in a CTE unit</div>
+          <div class="opt-btn-letter">Option C</div>
+          <div class="opt-btn-name">Hybrid</div>
+          <div class="opt-btn-sub">Task list anchors UbD structure</div>
         </div>
       </div>
 
       <div class="sidebar-note">
-        <div class="sidebar-note-lbl">Who does what</div>
-        <div class="sidebar-note-text">CCIU LLS specialists build the curriculum structure using UbD and the state task list. Teachers design the instruction that lives inside it. The protocol defines how those two things connect.</div>
+        <div class="sidebar-note-lbl">A question for the room</div>
+        <div class="sidebar-note-text" style="font-weight:700; color:rgba(255,255,255,0.75);">How do we build CTE curriculum that is standard, guaranteed, and viable across all three campuses?</div>
       </div>
     </div>
 
@@ -823,205 +741,117 @@ header {
       <div class="detail-pane">
 
         <div class="opt-view active" id="v3A">
-          <div class="d-eyebrow">The Frame — Protocol</div>
-          <div class="d-title">Understanding by Design</div>
-          <div class="d-sub">UbD is the design framework — backward design from desired outcomes. You start by defining what students will understand and be able to do, then design the evidence of that, then plan the learning. The instructional approach (how you get there) is a separate — and open — question.</div>
+          <div class="d-eyebrow">Option A:Design</div>
+          <div class="d-title">Task-List First</div>
+          <div class="d-sub">The state task list drives the structure. Skills are sequenced into a scope and sequence; assessments are built around demonstrated competency.</div>
           <div class="d-grid">
             <div class="d-card">
-              <div class="d-card-lbl">The three stages</div>
-              <ul class="d-list items">
-                <li><strong>Stage 1 — Desired Results:</strong> What should students understand? What enduring insight or competency does this unit build toward? What are the essential questions that drive inquiry?</li>
-                <li><strong>Stage 2 — Assessment Evidence:</strong> What would it look like if students actually got there? Define the performance task before planning any instruction.</li>
-                <li><strong>Stage 3 — Learning Plan:</strong> Now design the instruction — backward from the assessment, in service of the enduring understanding.</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">Why it fits CTE</div>
-              <ul class="d-list items">
-                <li>Industry competency standards are already outcome-defined — UbD gives them curriculum structure</li>
-                <li>Credential alignment lives naturally in Stage 2 — the performance task mirrors real industry work</li>
-                <li>Enduring understandings answer the question CTE students most need: "why does this matter in the field?"</li>
-                <li>The unit/lesson distinction becomes clear: lessons are Stage 3 moves in service of Stage 1</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">What it produces</div>
+              <div class="d-card-lbl">+</div>
               <ul class="d-list pros">
-                <li>Units that are coherent — every lesson connects to a larger purpose</li>
-                <li>Assessments that are authentic — designed before instruction, not after</li>
-                <li>Curriculum that is transferable — students understand the why, not just the how</li>
-                <li>A shared design language across programs and campuses</li>
+                <li>Directly accountable to credential requirements</li>
+                <li>Teachers recognize the structure from their industry background</li>
+                <li>Clearest path from task list to classroom</li>
               </ul>
             </div>
             <div class="d-card">
-              <div class="d-card-lbl">What it requires</div>
+              <div class="d-card-lbl">−</div>
               <ul class="d-list cons">
-                <li>Teachers need the conceptual foundation before the template makes sense</li>
-                <li>Facilitated writing sessions — not something teachers do alone with a blank form</li>
-                <li>Time investment upfront that pays off in curriculum quality and sustainability</li>
+                <li>Risk of checklist curriculum; skills without coherence or transferability</li>
+                <li>Assessment can drift toward compliance rather than demonstration</li>
+                <li>"Why does this matter?" stays unanswered</li>
               </ul>
             </div>
-          </div>
-          <div class="d-callout">
-            <div class="d-callout-lbl">One way to think about it</div>
-            <p>UbD doesn't tell you how to teach — it tells you how to design. Stage 3 is intentionally open: the learning plan could be a traditional instructional sequence, a project, a simulation, or something else entirely. The frame sets the destination; the delivery approach determines the journey.</p>
           </div>
         </div>
 
         <div class="opt-view" id="v3B">
-          <div class="d-eyebrow">The Delivery — Protocol</div>
-          <div class="d-title">Project Based Learning</div>
-          <div class="d-sub">PBL is a delivery approach — a way of structuring Stage 3 of a UbD unit so that students learn by doing sustained, authentic work organized around a driving question. In a PBL unit, the project isn't an add-on at the end. It's the vehicle for all the learning that happens before it.</div>
+          <div class="d-eyebrow">Option B:Design</div>
+          <div class="d-title">UbD First</div>
+          <div class="d-sub">Design backward from enduring understandings. Task list competencies are embedded as the knowledge and skills students need to reach those understandings.</div>
           <div class="d-grid">
             <div class="d-card">
-              <div class="d-card-lbl">Core elements of PBL</div>
-              <ul class="d-list items">
-                <li><strong>Driving question:</strong> An open, authentic question that organizes the project and anchors the enduring understanding</li>
-                <li><strong>Sustained inquiry:</strong> Students investigate, build knowledge, and apply it — not in a single lesson but over time</li>
-                <li><strong>Authentic context:</strong> The work mirrors what practitioners actually do in the field</li>
-                <li><strong>Public product:</strong> Something students create, present, or defend — the Stage 2 performance task made real</li>
-                <li><strong>Reflection:</strong> Students think about what they learned and how they learned it</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">Why it fits CTE</div>
-              <ul class="d-list items">
-                <li>CTE programs already have authentic contexts — the shop, the clinic, the kitchen, the studio</li>
-                <li>Industry-relevant products are natural PBL outputs</li>
-                <li>The driving question maps directly onto professional problem-solving</li>
-                <li>Students learn by doing — which is already how most CTE instruction works at its best</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">What it adds</div>
+              <div class="d-card-lbl">+</div>
               <ul class="d-list pros">
-                <li>Engagement — students work on something that matters, not just something that's assigned</li>
-                <li>Transfer — skills learned in a project context are more likely to stick</li>
-                <li>Coherence — the project gives every lesson a clear purpose within the unit arc</li>
-                <li>Credential alignment — the product can be the performance task, not a separate assessment</li>
+                <li>Builds coherent, transferable curriculum; skills have a "why"</li>
+                <li>Assessment is authentic, designed before instruction</li>
+                <li>Task list stops being a ceiling; it becomes the floor</li>
               </ul>
             </div>
             <div class="d-card">
-              <div class="d-card-lbl">What to consider</div>
+              <div class="d-card-lbl">−</div>
               <ul class="d-list cons">
-                <li>Not every unit needs to be a full project — PBL exists on a spectrum</li>
-                <li>Project design requires teacher skill and facilitation — it's more than "give students a task"</li>
-                <li>The driving question is harder to write well than it looks</li>
+                <li>Enduring understandings are harder to write than they look</li>
+                <li>May feel abstract to CTE practitioners at first</li>
+                <li>Requires facilitated writing; not a solo or template-fill exercise</li>
               </ul>
             </div>
-          </div>
-          <div class="d-callout">
-            <div class="d-callout-lbl">One way to think about it</div>
-            <p>PBL without UbD can produce engaging experiences that don't build toward anything coherent. UbD without PBL can produce coherent curriculum that isn't engaging or authentic. Together, they address both — UbD ensures the project is purposeful, PBL ensures the learning is real.</p>
           </div>
         </div>
 
         <div class="opt-view" id="v3C">
-          <div class="d-eyebrow">In Practice — Protocol</div>
-          <div class="d-title">UbD + PBL in a CTE Unit</div>
-          <div class="d-sub">When UbD is the frame and PBL is the delivery, the design sequence is clear: backward from the enduring understanding to the project to the driving question to the learning arc. The project isn't assigned at the end of the unit — it's designed first, as the evidence of understanding.</div>
+          <div class="d-eyebrow">Option C:Design</div>
+          <div class="d-title">Task List Anchors UbD</div>
+          <div class="d-sub">The task list organizes the competency clusters. UbD provides the design logic: enduring understandings, performance tasks, and learning arcs, organized around those clusters.</div>
           <div class="d-grid">
             <div class="d-card">
-              <div class="d-card-lbl">How they map together</div>
-              <ul class="d-list items">
-                <li><strong>Stage 1 (UbD) → Driving question (PBL):</strong> The enduring understanding becomes the driving question that anchors the project</li>
-                <li><strong>Stage 2 (UbD) → Public product (PBL):</strong> The performance task is the project deliverable — designed before any instruction is planned</li>
-                <li><strong>Stage 3 (UbD) → Learning arc (PBL):</strong> The instructional sequence scaffolds students toward completing the project with genuine understanding</li>
+              <div class="d-card-lbl">+</div>
+              <ul class="d-list pros">
+                <li>Credential accountability and transferable understanding in the same structure</li>
+                <li>Both LLS specialists and teachers have a concrete entry point</li>
+                <li>Most likely to produce curriculum that is standard, guaranteed, and viable</li>
               </ul>
             </div>
             <div class="d-card">
-              <div class="d-card-lbl">What this looks like in CTE</div>
-              <ul class="d-list items">
-                <li>A Health Sciences unit where the project is a patient care plan — assessed against clinical standards</li>
-                <li>A Trades unit where the project is a built structure — evaluated against industry specifications</li>
-                <li>An IT unit where the project is a working system — tested against real-world requirements</li>
-                <li>In each case: the project is the curriculum, not an add-on to it</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">What it requires from teachers</div>
+              <div class="d-card-lbl">−</div>
               <ul class="d-list cons">
-                <li>Understanding both frameworks well enough to design the project before the lessons</li>
-                <li>Comfort with students working at different paces toward the same outcome</li>
-                <li>Facilitation skill — managing a project arc is different from managing a lesson sequence</li>
+                <li>Requires fluency in both frameworks; the build is more complex</li>
+                <li>Risk of UbD becoming decorative if the task list dominates in practice</li>
+                <li>Takes the longest to build well; front-loads the investment</li>
               </ul>
             </div>
-            <div class="d-card">
-              <div class="d-card-lbl">The open question</div>
-              <ul class="d-list items">
-                <li>Should every unit be PBL-delivered, or is PBL the design standard for certain unit types?</li>
-                <li>Which programs are best positioned to pilot this approach first?</li>
-                <li>What does the teacher learning sequence look like for teachers new to both frameworks?</li>
-              </ul>
-            </div>
-          </div>
-          <div class="d-callout">
-            <div class="d-callout-lbl">One way to think about it</div>
-            <p>This combination is aspirational — and worth naming as such. The question for this conversation isn't "is this the right approach?" but "is this the direction we want to build toward?" The infrastructure and protocol can be designed to accommodate this from the start, even if the first units are simpler than the full vision.</p>
           </div>
         </div>
 
       </div>
 
-      <div class="compare-pane">
-        <div class="compare-hdr">In This Section</div>
-        <div class="cmp-opt">
-          <div class="cmp-opt-row">
-            <div class="cmp-opt-name">UbD — The Frame</div>
-            <span class="cmp-tag viewing-teal" id="ct3A" style="display:none;">Viewing</span>
-          </div>
-          <div class="cmp-opt-desc">Backward design from desired outcomes. Stage 1 defines what students understand, Stage 2 defines evidence, Stage 3 is the learning plan. The frame is non-negotiable — the delivery approach lives inside Stage 3.</div>
-        </div>
-        <div class="cmp-opt">
-          <div class="cmp-opt-row">
-            <div class="cmp-opt-name">PBL — The Delivery</div>
-            <span class="cmp-tag viewing-teal" id="ct3B" style="display:none;">Viewing</span>
-          </div>
-          <div class="cmp-opt-desc">Sustained inquiry organized around a driving question. Students learn by doing authentic work — the project is Stage 3 in action. Naturally aligned with CTE's real-world contexts.</div>
-        </div>
-        <div class="cmp-opt">
-          <div class="cmp-opt-row">
-            <div class="cmp-opt-name">Together — In Practice</div>
-            <span class="cmp-tag viewing-teal" id="ct3C" style="display:none;">Viewing</span>
-          </div>
-          <div class="cmp-opt-desc">UbD ensures the project is purposeful. PBL ensures the learning is authentic. The open question: is this the delivery standard, or one mode among several?</div>
-        </div>
-      </div>
     </div>
   </div>
 
   <!-- ══════════════════════════════════
-       TAB 4 — TEACHER LEARNING
+       TAB 4:CONTEXT
   ══════════════════════════════════ -->
   <div class="panel" id="p4">
     <div class="opt-sidebar">
-      <div class="sidebar-section-title">The Learning Arc</div>
+      <div class="sidebar-section-title">Build</div>
 
       <div class="opt-btn c-violet active" onclick="switchOpt(4,'A',this)">
         <div class="opt-dot"></div>
         <div>
-          <div class="opt-btn-letter">The Distinction</div>
-          <div class="opt-btn-name">Building the box vs. filling it</div>
+          <div class="opt-btn-letter">Option A</div>
+          <div class="opt-btn-name">LLS Builds the Exemplar</div>
+          <div class="opt-btn-sub">One complete unit built by LLS as the model</div>
         </div>
       </div>
       <div class="opt-btn c-violet" onclick="switchOpt(4,'B',this)">
         <div class="opt-dot"></div>
         <div>
-          <div class="opt-btn-letter">The Training</div>
-          <div class="opt-btn-name">What teachers need to know</div>
+          <div class="opt-btn-letter">Option B</div>
+          <div class="opt-btn-name">Facilitated Writing Sessions</div>
+          <div class="opt-btn-sub">LLS facilitates; teachers produce units in the room</div>
         </div>
       </div>
       <div class="opt-btn c-violet" onclick="switchOpt(4,'C',this)">
         <div class="opt-dot"></div>
         <div>
-          <div class="opt-btn-letter">The Session</div>
-          <div class="opt-btn-name">What orientation looks like in practice</div>
+          <div class="opt-btn-letter">Option C</div>
+          <div class="opt-btn-name">Curriculum Writing PD</div>
+          <div class="opt-btn-sub">LLS trains teachers to write; teachers produce independently</div>
         </div>
       </div>
 
       <div class="sidebar-note">
-        <div class="sidebar-note-lbl">The core belief</div>
-        <div class="sidebar-note-text">Teachers are instructional experts, not curriculum writers. Training them to work within a well-designed curriculum structure is a different — and more sustainable — investment than training them to build it from scratch.</div>
+        <div class="sidebar-note-lbl">A question for the room</div>
+        <div class="sidebar-note-text" style="font-weight:700; color:rgba(255,255,255,0.75);">How do we build CTE curriculum that is standard, guaranteed, and viable across all three campuses?</div>
       </div>
     </div>
 
@@ -1029,174 +859,82 @@ header {
       <div class="detail-pane">
 
         <div class="opt-view active" id="v4A">
-          <div class="d-eyebrow">Teacher Learning — The Distinction</div>
-          <div class="d-title">Building the box vs. filling it</div>
-          <div class="d-sub">Curriculum writing and instructional design are different skills. Treating them as the same — and expecting teachers to do both — is one of the reasons curriculum development in schools is so inconsistent. This model separates them deliberately.</div>
+          <div class="d-eyebrow">Option A:Build</div>
+          <div class="d-title">LLS Builds the Exemplar</div>
+          <div class="d-sub">LLS develops one fully realized unit, all three stages complete, using the design framework and program materials. This unit becomes the model every subsequent unit is measured against.</div>
           <div class="d-grid">
             <div class="d-card">
-              <div class="d-card-lbl">CCIU LLS builds the box</div>
-              <ul class="d-list items">
-                <li>Designs the overall curriculum structure using UbD as the framework</li>
-                <li>Works from the state-provided task list to map what gets taught, assessed, and mastered — and where</li>
-                <li>Defines the unit sequence, scope, and the design parameters each unit must meet</li>
-                <li>Produces the curriculum document that travels across all three campuses</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">Teachers fill it</div>
-              <ul class="d-list items">
-                <li>Design the actual instruction that lives within each unit — lessons, activities, delivery approaches</li>
-                <li>Bring industry expertise, classroom knowledge, and relationships with students</li>
-                <li>Make the pedagogical decisions: pacing, differentiation, instructional moves</li>
-                <li>Decide how PBL — or any other delivery mode — takes shape in their classroom</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">The state provides the raw material</div>
-              <ul class="d-list items">
-                <li>Task lists define the skill inventory for each program area</li>
-                <li>These are the non-negotiable competencies students must develop</li>
-                <li>CCIU LLS organizes them into a coherent curriculum structure; teachers deliver them</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">Why this distinction matters</div>
+              <div class="d-card-lbl">+</div>
               <ul class="d-list pros">
-                <li>Teachers aren't asked to do something that isn't their expertise</li>
-                <li>Curriculum quality doesn't depend on whether any individual teacher is also a strong curriculum writer</li>
-                <li>The curriculum is consistent across campuses — not a reflection of whoever happened to write it</li>
-                <li>Teachers can focus on what they're actually best at: knowing their field and knowing their students</li>
+                <li>Teachers see a finished product before they try to produce one</li>
+                <li>No ambiguity about what "done" looks like; the exemplar shows it</li>
+                <li>Strongest quality control on the first unit</li>
               </ul>
             </div>
-          </div>
-          <div class="d-callout">
-            <div class="d-callout-lbl">One way to think about it</div>
-            <p>An architect designs the building. A contractor builds it. A family decides how they live in it. None of those roles are interchangeable — and the building is better because each person does what they're actually trained to do. This model works the same way.</p>
+            <div class="d-card">
+              <div class="d-card-lbl">−</div>
+              <ul class="d-list cons">
+                <li>LLS needs enough program context to build something credible</li>
+                <li>Teachers are reacting, not co-producing; ownership is lower</li>
+                <li>Exemplar may over-fit to one program and need revision as others are added</li>
+              </ul>
+            </div>
           </div>
         </div>
 
         <div class="opt-view" id="v4B">
-          <div class="d-eyebrow">Teacher Learning — The Training</div>
-          <div class="d-title">What teachers need to know</div>
-          <div class="d-sub">Teacher training in this model isn't about writing curriculum — it's about curriculum literacy. Teachers need to understand the structure they're working within well enough to make coherent instructional decisions inside it.</div>
+          <div class="d-eyebrow">Option B:Build</div>
+          <div class="d-title">Facilitated Writing Sessions</div>
+          <div class="d-sub">LLS facilitates structured working sessions with Building Trades teachers. LLS holds the design framework and process; teachers bring program expertise and produce draft units in the room.</div>
           <div class="d-grid">
             <div class="d-card">
-              <div class="d-card-lbl">Reading the curriculum document</div>
-              <ul class="d-list items">
-                <li>Understanding the unit sequence and how units connect across the program</li>
-                <li>Knowing what the UbD stages mean for their instructional planning</li>
-                <li>Understanding the enduring understanding and essential questions as the anchor for their lessons — not just headers on a form</li>
-                <li>Recognizing where their unit sits in the larger scope and sequence</li>
+              <div class="d-card-lbl">+</div>
+              <ul class="d-list pros">
+                <li>LLS and teachers each do what they do best</li>
+                <li>Content is grounded in real program expertise from the start</li>
+                <li>Teachers understand the structure because they used it to build something</li>
               </ul>
             </div>
             <div class="d-card">
-              <div class="d-card-lbl">Knowing the skill map</div>
-              <ul class="d-list items">
-                <li>Which skills from the state task list are <strong>introduced</strong> in their unit</li>
-                <li>Which skills are being <strong>practiced and assessed</strong></li>
-                <li>Which skills should reach <strong>mastery</strong> by the unit's end</li>
-                <li>How that maps to credential requirements and program-level outcomes</li>
+              <div class="d-card-lbl">−</div>
+              <ul class="d-list cons">
+                <li>Requires significant scheduled teacher time</li>
+                <li>Quality depends on facilitation; harder to scale across many programs at once</li>
+                <li>Output quality varies unless sessions are tightly structured</li>
               </ul>
             </div>
-            <div class="d-card">
-              <div class="d-card-lbl">Designing instruction within the structure</div>
-              <ul class="d-list items">
-                <li>Planning lessons that build toward the unit's performance task — not just filling time</li>
-                <li>Making PBL delivery decisions within the unit arc — what the project looks like, how it's scaffolded</li>
-                <li>Differentiating within the structure without breaking the continuity across classrooms</li>
-                <li>Maintaining fidelity to the curriculum while exercising professional judgment</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">Creating continuity across campuses</div>
-              <ul class="d-list items">
-                <li>Using shared language — enduring understandings, essential questions, performance tasks — so teachers in different buildings are aligned</li>
-                <li>Understanding what "same curriculum, different instruction" actually looks like in practice</li>
-                <li>Knowing where to escalate when the structure isn't working — and how that feeds back to CCIU LLS</li>
-              </ul>
-            </div>
-          </div>
-          <div class="d-callout">
-            <div class="d-callout-lbl">One way to think about it</div>
-            <p>A musician doesn't write the score — but they need to read it fluently enough to interpret it with intention and expertise. The training is about developing that fluency: not just following the curriculum, but understanding it well enough to make it come alive in the classroom.</p>
           </div>
         </div>
 
         <div class="opt-view" id="v4C">
-          <div class="d-eyebrow">Teacher Learning — The Session</div>
-          <div class="d-title">What orientation looks like in practice</div>
-          <div class="d-sub">Once the curriculum structure exists, teachers need a structured orientation — not a one-time overview, but a working session that builds the literacy they need to deliver with fidelity and confidence.</div>
+          <div class="d-eyebrow">Option C:Build</div>
+          <div class="d-title">Curriculum Writing PD</div>
+          <div class="d-sub">LLS delivers professional development focused on curriculum literacy and the design framework. Teachers learn to write units using the template, then produce independently with LLS available for review and coaching.</div>
           <div class="d-grid">
             <div class="d-card">
-              <div class="d-card-lbl">Session structure</div>
-              <ul class="d-list items">
-                <li><strong>Part 1</strong> — Walk the curriculum document: what's in it, how it's organized, what each section means for planning</li>
-                <li><strong>Part 2</strong> — Read the skill map: where each state task list skill lands across the unit sequence — introduced, assessed, mastered</li>
-                <li><strong>Part 3</strong> — Plan within the structure: teachers draft the instructional approach for one unit, working within the Stage 3 parameters</li>
-                <li><strong>Part 4</strong> — Surface questions and feedback: what's unclear, what needs adjustment, what the update cycle looks like</li>
+              <div class="d-card-lbl">+</div>
+              <ul class="d-list pros">
+                <li>Builds teacher independence; they can produce without LLS in the room</li>
+                <li>Scales better once teachers internalize the framework</li>
+                <li>Lower ongoing LLS time commitment after the PD is delivered</li>
               </ul>
             </div>
             <div class="d-card">
-              <div class="d-card-lbl">What teachers leave with</div>
-              <ul class="d-list items">
-                <li>A working understanding of the curriculum document and how to navigate it</li>
-                <li>Clarity on what they're responsible for teaching, assessing, and bringing to mastery in each unit</li>
-                <li>A draft instructional plan for one unit — their work, within the structure CCIU built</li>
-                <li>A feedback loop with CCIU LLS for when the curriculum needs refinement</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">What CCIU LLS brings</div>
-              <ul class="d-list items">
-                <li>The curriculum document — complete enough to orient from</li>
-                <li>The skill map showing where each state task list competency lands</li>
-                <li>Facilitation of the session</li>
-                <li>A process for ongoing teacher feedback into curriculum updates</li>
-              </ul>
-            </div>
-            <div class="d-card">
-              <div class="d-card-lbl">What this is not</div>
+              <div class="d-card-lbl">−</div>
               <ul class="d-list cons">
-                <li>A curriculum writing session — the box is already built before teachers enter this room</li>
-                <li>A one-time event — curriculum literacy develops over time as teachers use and question the structure</li>
-                <li>Top-down compliance — teachers' instructional expertise should actively shape how the curriculum is refined</li>
+                <li>Writing quality varies until teachers develop fluency with the framework</li>
+                <li>Structural drift without close review; training doesn't guarantee consistency</li>
+                <li>Slowest path to production-quality curriculum</li>
               </ul>
             </div>
           </div>
-          <div class="d-callout">
-            <div class="d-callout-lbl">One way to think about it</div>
-            <p>This session is the handoff — the moment where the curriculum structure becomes something teachers can actually work with. Getting this right matters as much as getting the curriculum document right. A great curriculum that teachers can't navigate is no more useful than no curriculum at all.</p>
-          </div>
         </div>
 
       </div>
 
-      <div class="compare-pane">
-        <div class="compare-hdr">In This Section</div>
-        <div class="cmp-opt">
-          <div class="cmp-opt-row">
-            <div class="cmp-opt-name">The Distinction</div>
-            <span class="cmp-tag viewing-violet" id="ct4A" style="display:none;">Viewing</span>
-          </div>
-          <div class="cmp-opt-desc">CCIU LLS builds the curriculum structure. Teachers design the instruction within it. The state task list is the raw material both work from.</div>
-        </div>
-        <div class="cmp-opt">
-          <div class="cmp-opt-row">
-            <div class="cmp-opt-name">The Training</div>
-            <span class="cmp-tag viewing-violet" id="ct4B" style="display:none;">Viewing</span>
-          </div>
-          <div class="cmp-opt-desc">Curriculum literacy: reading the document, knowing the skill map, designing instruction within the structure, maintaining continuity across campuses.</div>
-        </div>
-        <div class="cmp-opt">
-          <div class="cmp-opt-row">
-            <div class="cmp-opt-name">The Session</div>
-            <span class="cmp-tag viewing-violet" id="ct4C" style="display:none;">Viewing</span>
-          </div>
-          <div class="cmp-opt-desc">The handoff — a working orientation where teachers move from receiving the curriculum to being able to navigate and deliver within it.</div>
-        </div>
-      </div>
     </div>
   </div>
+
 
 </div>
 
@@ -1225,6 +963,7 @@ function switchOpt(tab, opt, btn) {
 document.getElementById('ct2A').style.display = 'inline-block';
 document.getElementById('ct3A').style.display = 'inline-block';
 document.getElementById('ct4A').style.display = 'inline-block';
+document.getElementById('ct5A').style.display = 'inline-block';
 </script>
 </body>
 </html>
