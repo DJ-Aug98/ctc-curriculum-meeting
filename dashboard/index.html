@@ -20,6 +20,8 @@
   --amber-lt: #fff0ee;
   --amber-bd: #ffb3ab;
   --crimson: #8a1e41;
+  --crimson-lt: #f5e8ed;
+  --crimson-bd: #c4728e;
   --slate-50:  #F8FAFC;
   --slate-100: #F1F5F9;
   --slate-200: #E2E8F0;
@@ -102,7 +104,7 @@ header {
 .tab.active .tab-num { opacity: 1; }
 .tab.t1.active { color: white; border-bottom-color: rgba(255,255,255,0.6); }
 .tab.t2.active { color: white; border-bottom-color: var(--blue-bd); }
-.tab.t3.active { color: white; border-bottom-color: var(--teal-bd); }
+.tab.t3.active { color: white; border-bottom-color: var(--crimson-bd); }
 .tab.t4.active { color: white; border-bottom-color: var(--violet-bd); }
 .tab.t5.active { color: white; border-bottom-color: var(--amber-bd); }
 
@@ -138,6 +140,16 @@ header {
 @keyframes panelOut {
   from { opacity: 1; transform: scale(1); }
   to   { opacity: 0; transform: scale(0.98); }
+}
+
+/* Phase 1 expands outward from where the Phase 1 box sits on the Vision screen */
+#p1.active {
+  animation: phase1Expand 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: 17% 78%;
+}
+@keyframes phase1Expand {
+  from { opacity: 0; transform: scale(0.35); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 /* ═══════════════════════════════════════
@@ -238,7 +250,7 @@ header {
    TAB 1:HOME
 ═══════════════════════════════════════ */
 #p1 {
-  background: var(--slate-900);
+  background: #0b2e33;
   align-items: center;
   padding: 56px 40px 56px;
   gap: 48px;
@@ -293,7 +305,8 @@ header {
 .flow-card:hover { opacity: 0.85; transform: translateY(-2px); }
 
 .flow-card.blue   { background: rgba(0,79,113,0.35);   border-color: rgba(141,200,232,0.3); }
-.flow-card.teal   { background: rgba(13,82,87,0.35);   border-color: rgba(73,197,177,0.3); }
+.flow-card.teal    { background: rgba(13,82,87,0.35);   border-color: rgba(73,197,177,0.3); }
+.flow-card.crimson { background: rgba(138,30,65,0.4);  border-color: rgba(196,114,142,0.4); }
 .flow-card.violet { background: rgba(60,16,83,0.35);   border-color: rgba(215,198,230,0.3); }
 .flow-card.amber  { background: rgba(138,30,65,0.35);  border-color: rgba(255,179,171,0.3); }
 
@@ -354,7 +367,8 @@ header {
 .opt-btn:hover { background: rgba(255,255,255,0.06); }
 .opt-btn.active { background: rgba(255,255,255,0.12); }
 .opt-btn.active.c-blue   { border-left-color: var(--blue-bd); }
-.opt-btn.active.c-teal   { border-left-color: var(--teal-bd); }
+.opt-btn.active.c-teal    { border-left-color: var(--teal-bd); }
+.opt-btn.active.c-crimson { border-left-color: var(--crimson-bd); }
 .opt-btn.active.c-violet { border-left-color: var(--violet-bd); }
 .opt-btn.active.c-amber  { border-left-color: var(--amber-bd); }
 
@@ -368,7 +382,8 @@ header {
   transition: all 0.12s;
 }
 .opt-btn.active.c-blue   .opt-dot { background: var(--blue-bd);   border-color: var(--blue-bd); }
-.opt-btn.active.c-teal   .opt-dot { background: var(--teal-bd);   border-color: var(--teal-bd); }
+.opt-btn.active.c-teal    .opt-dot { background: var(--teal-bd);    border-color: var(--teal-bd); }
+.opt-btn.active.c-crimson .opt-dot { background: var(--crimson-bd); border-color: var(--crimson-bd); }
 .opt-btn.active.c-violet .opt-dot { background: var(--violet-bd); border-color: var(--violet-bd); }
 .opt-btn.active.c-amber  .opt-dot { background: var(--amber-bd);  border-color: var(--amber-bd); }
 
@@ -418,29 +433,29 @@ header {
 
 /* ── PER-PANEL SIDEBAR COLORS ── */
 #p2 .opt-sidebar { background: var(--blue); }
-#p3 .opt-sidebar { background: var(--teal); }
+#p3 .opt-sidebar { background: var(--crimson); }
 #p4 .opt-sidebar { background: #3c1053; }
 #p5 .opt-sidebar { background: var(--crimson); }
 
 /* ── PER-PANEL DETAIL TINTS ── */
 #p2 .detail-pane { background: var(--blue-lt); }
-#p3 .detail-pane { background: var(--teal-lt); }
+#p3 .detail-pane { background: var(--crimson-lt); }
 #p4 .detail-pane { background: var(--violet-lt); }
 #p5 .detail-pane { background: var(--amber-lt); }
 
 /* ── PER-PANEL CARD ACCENTS ── */
 #p2 .d-card { border-color: var(--blue-bd); }
-#p3 .d-card { border-color: var(--teal-bd); }
+#p3 .d-card { border-color: var(--crimson-bd); }
 #p4 .d-card { border-color: var(--violet-bd); }
 #p5 .d-card { border-color: var(--amber-bd); }
 
 #p2 .d-card-lbl { color: var(--blue); }
-#p3 .d-card-lbl { color: var(--teal); }
+#p3 .d-card-lbl { color: var(--crimson); }
 #p4 .d-card-lbl { color: var(--violet); }
 #p5 .d-card-lbl { color: var(--crimson); }
 
 #p2 .d-eyebrow { color: var(--blue); }
-#p3 .d-eyebrow { color: var(--teal); }
+#p3 .d-eyebrow { color: var(--crimson); }
 #p4 .d-eyebrow { color: var(--violet); }
 #p5 .d-eyebrow { color: var(--crimson); }
 
@@ -756,7 +771,7 @@ header {
 
       <div class="flow-arrow">→</div>
 
-      <div class="flow-card teal" onclick="switchTab(3)">
+      <div class="flow-card crimson" onclick="switchTab(3)">
         <div class="flow-num">Design</div>
         <div class="flow-title">What is the format of the curriculum?</div>
       </div>
@@ -906,7 +921,7 @@ header {
     <div class="opt-sidebar">
       <div class="sidebar-section-title">Design</div>
 
-      <div class="opt-btn c-teal active" onclick="switchOpt(3,'A',this)">
+      <div class="opt-btn c-crimson active" onclick="switchOpt(3,'A',this)">
         <div class="opt-dot"></div>
         <div>
           <div class="opt-btn-letter">Option A</div>
@@ -914,7 +929,7 @@ header {
           <div class="opt-btn-sub">Start from the state task list</div>
         </div>
       </div>
-      <div class="opt-btn c-teal" onclick="switchOpt(3,'B',this)">
+      <div class="opt-btn c-crimson" onclick="switchOpt(3,'B',this)">
         <div class="opt-dot"></div>
         <div>
           <div class="opt-btn-letter">Option B</div>
@@ -922,7 +937,7 @@ header {
           <div class="opt-btn-sub">Backward design from outcomes</div>
         </div>
       </div>
-      <div class="opt-btn c-teal" onclick="switchOpt(3,'C',this)">
+      <div class="opt-btn c-crimson" onclick="switchOpt(3,'C',this)">
         <div class="opt-dot"></div>
         <div>
           <div class="opt-btn-letter">Option C</div>
