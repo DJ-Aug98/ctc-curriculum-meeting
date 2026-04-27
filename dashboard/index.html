@@ -112,6 +112,174 @@ header {
 .panel.active { display: flex; flex-direction: column; }
 
 /* ═══════════════════════════════════════
+   TAB 0:VISION / LANDING
+═══════════════════════════════════════ */
+#p0 {
+  background: var(--slate-900);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 60px 56px;
+  gap: 40px;
+  overflow-y: auto;
+}
+.vision-anchor {
+  text-align: center;
+  max-width: 720px;
+}
+.vision-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+  margin-bottom: 16px;
+}
+.vision-statement {
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 800;
+  color: white;
+  line-height: 1.2;
+}
+.vision-statement em {
+  font-style: normal;
+  color: #49c5b1;
+}
+.vision-note {
+  margin-top: 14px;
+  font-size: clamp(14px, 1.3vw, 16px);
+  color: var(--slate-400);
+}
+
+/* Timeline */
+.timeline-wrap {
+  width: 100%;
+  max-width: 900px;
+}
+.timeline-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin-bottom: 0;
+}
+.timeline-start {
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-right: 28px solid rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+.timeline-line {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.15);
+  position: relative;
+}
+.timeline-end {
+  width: 0;
+  height: 0;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 22px solid rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+.timeline-years {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding-top: 0;
+}
+.timeline-year {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+.timeline-tick {
+  width: 2px;
+  height: 20px;
+  background: rgba(255,255,255,0.2);
+}
+.timeline-year-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--slate-400);
+  margin-bottom: 10px;
+  margin-top: 4px;
+}
+.timeline-phase {
+  width: 100%;
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+}
+.timeline-phase.current {
+  border-color: rgba(73,197,177,0.4);
+  background: rgba(13,82,87,0.35);
+}
+.timeline-phase-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+  margin-bottom: 8px;
+}
+.timeline-phase.current .timeline-phase-label {
+  color: #49c5b1;
+}
+.timeline-phase-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 10px;
+}
+.timeline-phase.current .timeline-phase-title {
+  color: white;
+}
+.timeline-phase-qs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.timeline-phase-q {
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+  padding-left: 14px;
+  position: relative;
+  line-height: 1.4;
+}
+.timeline-phase-q::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: rgba(255,255,255,0.2);
+  font-size: 11px;
+}
+.timeline-phase.current .timeline-phase-q {
+  color: rgba(255,255,255,0.7);
+}
+.timeline-phase.current .timeline-phase-q::before {
+  color: #49c5b1;
+}
+.phase-cta {
+  margin-top: 12px;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #49c5b1;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.phase-cta:hover { opacity: 0.75; }
+
+/* ═══════════════════════════════════════
    TAB 1:HOME
 ═══════════════════════════════════════ */
 #p1 {
@@ -412,7 +580,7 @@ header {
   margin-bottom: 8px;
 }
 .d-callout p {
-  font-size: clamp(12px, 1.2vw, 14px);
+  font-size: clamp(15px, 1.3vw, 17px);
   color: var(--slate-600);
   line-height: 1.75;
 }
@@ -540,7 +708,8 @@ header {
 </header>
 
 <div class="tab-bar">
-  <div class="tab t1 active" onclick="switchTab(1)">Home</div>
+  <div class="tab t1 active" onclick="switchTab(0)">Vision</div>
+  <div class="tab t1" onclick="switchTab(1)">Phase 1</div>
   <div class="tab t2" onclick="switchTab(2)">Structure</div>
   <div class="tab t3" onclick="switchTab(3)">Design</div>
   <div class="tab t4" onclick="switchTab(4)">Build</div>
@@ -549,9 +718,78 @@ header {
 <div class="content">
 
   <!-- ══════════════════════════════════
+       TAB 0:VISION
+  ══════════════════════════════════ -->
+  <div class="panel active" id="p0">
+
+    <div class="vision-anchor">
+      <div class="vision-label">The long-term goal</div>
+      <div class="vision-statement">
+        CTE curriculum that is <em>standard, guaranteed, and viable</em> across all three campuses
+      </div>
+      <div class="vision-note">A multi-year initiative. This session is where Phase 1 begins.</div>
+    </div>
+
+    <div class="timeline-wrap">
+      <div class="timeline-track">
+        <div class="timeline-start"></div>
+        <div class="timeline-line"></div>
+        <div class="timeline-end"></div>
+      </div>
+      <div class="timeline-years">
+
+        <div class="timeline-year">
+          <div class="timeline-tick"></div>
+          <div class="timeline-year-label">2025 – 26</div>
+          <div class="timeline-phase current">
+            <div class="timeline-phase-label">Phase 1 — Now</div>
+            <div class="timeline-phase-title">Laying the Foundation</div>
+            <div class="timeline-phase-qs">
+              <div class="timeline-phase-q">Where does curriculum live?</div>
+              <div class="timeline-phase-q">What is the format of the curriculum?</div>
+              <div class="timeline-phase-q">How does curriculum get produced?</div>
+            </div>
+            <div class="phase-cta" onclick="switchTab(1)">Explore Phase 1 →</div>
+          </div>
+        </div>
+
+        <div class="timeline-year">
+          <div class="timeline-tick"></div>
+          <div class="timeline-year-label">2026 – 27</div>
+          <div class="timeline-phase">
+            <div class="timeline-phase-label">Phase 2</div>
+            <div class="timeline-phase-title">Building the Curriculum</div>
+            <div class="timeline-phase-qs">
+              <div class="timeline-phase-q">Writing units across all programs</div>
+              <div class="timeline-phase-q">Piloting and refining with teachers</div>
+              <div class="timeline-phase-q">Cross-campus consistency established</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-year">
+          <div class="timeline-tick"></div>
+          <div class="timeline-year-label">2027 – 28</div>
+          <div class="timeline-phase">
+            <div class="timeline-phase-label">Phase 3</div>
+            <div class="timeline-phase-title">Sustaining the System</div>
+            <div class="timeline-phase-qs">
+              <div class="timeline-phase-q">Curriculum review cycles in place</div>
+              <div class="timeline-phase-q">Infrastructure supports ongoing updates</div>
+              <div class="timeline-phase-q">Standard, guaranteed, viable — realized</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════
        TAB 1:THE IDEA
   ══════════════════════════════════ -->
-  <div class="panel active" id="p1">
+  <div class="panel" id="p1">
 
     <div class="idea-frame">
       <div class="idea-q-label">A question for the room</div>
@@ -592,15 +830,15 @@ header {
         <div class="opt-dot"></div>
         <div>
           <div class="opt-btn-letter">Option A</div>
-          <div class="opt-btn-name">Low-Tech</div>
-          <div class="opt-btn-sub">Google Drive / Microsoft 365</div>
+          <div class="opt-btn-name">Google Drive</div>
+          <div class="opt-btn-sub">Shared folders and templates</div>
         </div>
       </div>
       <div class="opt-btn c-blue" onclick="switchOpt(2,'B',this)">
         <div class="opt-dot"></div>
         <div>
           <div class="opt-btn-letter">Option B</div>
-          <div class="opt-btn-name">Mid-Tech</div>
+          <div class="opt-btn-name">Notion</div>
           <div class="opt-btn-sub">Notion / Obsidian or similar</div>
         </div>
       </div>
@@ -608,7 +846,7 @@ header {
         <div class="opt-dot"></div>
         <div>
           <div class="opt-btn-letter">Option C</div>
-          <div class="opt-btn-name">Purpose-Built Platform</div>
+          <div class="opt-btn-name">Curriculum Platforms</div>
           <div class="opt-btn-sub">Atlas, Chalk, Toddle, Curriculum Trak</div>
         </div>
       </div>
@@ -624,8 +862,8 @@ header {
 
         <div class="opt-view active" id="v2A">
           <div class="d-eyebrow">Option A:Structure</div>
-          <div class="d-title">Low-Tech</div>
-          <div class="d-sub">Structured folders, shared templates, alignment tracker in a spreadsheet. Tools already in use.</div>
+          <div class="d-title">Google Drive</div>
+          <div class="d-sub">Structured folders, shared templates, and an alignment tracker in a spreadsheet. Uses tools already in place.</div>
           <div class="d-grid">
             <div class="d-card">
               <div class="d-card-lbl">+</div>
@@ -644,12 +882,16 @@ header {
               </ul>
             </div>
           </div>
+          <div class="d-callout" style="border-color:var(--blue-bd); background:var(--blue-lt);">
+            <div class="d-callout-lbl" style="color:var(--blue);">LLS will</div>
+            <p>Design the folder architecture, naming conventions, and shared templates. Deliver a ready-to-use Drive structure and a curriculum alignment tracker teachers can use immediately.</p>
+          </div>
         </div>
 
         <div class="opt-view" id="v2B">
           <div class="d-eyebrow">Option B:Structure</div>
-          <div class="d-title">Mid-Tech</div>
-          <div class="d-sub">Relational workspace: units, competencies, and assessments are linked, not just filed. Leadership visibility across programs and campuses.</div>
+          <div class="d-title">Notion</div>
+          <div class="d-sub">A relational workspace where units, competencies, and assessments are linked, not just filed. Leadership visibility across programs and campuses.</div>
           <div class="d-grid">
             <div class="d-card">
               <div class="d-card-lbl">+</div>
@@ -668,11 +910,15 @@ header {
               </ul>
             </div>
           </div>
+          <div class="d-callout" style="border-color:var(--blue-bd); background:var(--blue-lt);">
+            <div class="d-callout-lbl" style="color:var(--blue);">LLS will</div>
+            <p>Build and configure the Notion workspace with linked databases for programs, units, and competencies. Deliver a functional system with documentation and a teacher onboarding guide.</p>
+          </div>
         </div>
 
         <div class="opt-view" id="v2C">
           <div class="d-eyebrow">Option C:Structure</div>
-          <div class="d-title">Purpose-Built Platform</div>
+          <div class="d-title">Curriculum Platforms</div>
           <div class="d-sub">Dedicated curriculum mapping software with alignment, cross-campus visibility, and reporting built in. Atlas, Chalk, Toddle, Curriculum Trak.</div>
           <div class="d-grid">
             <div class="d-card">
@@ -691,6 +937,10 @@ header {
                 <li>A platform with no curriculum in it solves nothing; process first</li>
               </ul>
             </div>
+          </div>
+          <div class="d-callout" style="border-color:var(--blue-bd); background:var(--blue-lt);">
+            <div class="d-callout-lbl" style="color:var(--blue);">LLS will</div>
+            <p>Evaluate platform options against CTC's needs, facilitate the selection process, and support implementation planning. Guide curriculum import and configuration once a platform is selected.</p>
           </div>
         </div>
 
@@ -762,6 +1012,10 @@ header {
               </ul>
             </div>
           </div>
+          <div class="d-callout" style="border-color:var(--teal-bd); background:var(--teal-lt);">
+            <div class="d-callout-lbl" style="color:var(--teal);">LLS will</div>
+            <p>Source and organize the state task lists for each program, facilitate the scope and sequence mapping, and deliver a structured competency framework ready for unit writing.</p>
+          </div>
         </div>
 
         <div class="opt-view" id="v3B">
@@ -786,6 +1040,10 @@ header {
               </ul>
             </div>
           </div>
+          <div class="d-callout" style="border-color:var(--teal-bd); background:var(--teal-lt);">
+            <div class="d-callout-lbl" style="color:var(--teal);">LLS will</div>
+            <p>Facilitate enduring understanding and essential question development with teachers. Deliver completed Stage 1 frameworks for each program, grounded in teacher expertise and ready for unit writing.</p>
+          </div>
         </div>
 
         <div class="opt-view" id="v3C">
@@ -809,6 +1067,10 @@ header {
                 <li>Takes the longest to build well; front-loads the investment</li>
               </ul>
             </div>
+          </div>
+          <div class="d-callout" style="border-color:var(--teal-bd); background:var(--teal-lt);">
+            <div class="d-callout-lbl" style="color:var(--teal);">LLS will</div>
+            <p>Lead the competency clustering process using the state task list, then facilitate UbD design sessions to wrap enduring understandings and performance tasks around each cluster. Deliver integrated unit frameworks for each program.</p>
           </div>
         </div>
 
@@ -880,6 +1142,10 @@ header {
               </ul>
             </div>
           </div>
+          <div class="d-callout" style="border-color:var(--violet-bd); background:var(--violet-lt);">
+            <div class="d-callout-lbl" style="color:var(--violet);">LLS will</div>
+            <p>Produce one fully realized unit plan for the pilot program, all three stages complete. This unit is our deliverable and becomes the model every subsequent unit is measured against.</p>
+          </div>
         </div>
 
         <div class="opt-view" id="v4B">
@@ -903,6 +1169,10 @@ header {
                 <li>Output quality varies unless sessions are tightly structured</li>
               </ul>
             </div>
+          </div>
+          <div class="d-callout" style="border-color:var(--violet-bd); background:var(--violet-lt);">
+            <div class="d-callout-lbl" style="color:var(--violet);">LLS will</div>
+            <p>Design and facilitate structured working sessions with Building Trades teachers. We bring the framework and the process; teachers bring the program expertise. Each session produces draft curriculum, not just training.</p>
           </div>
         </div>
 
@@ -928,6 +1198,10 @@ header {
               </ul>
             </div>
           </div>
+          <div class="d-callout" style="border-color:var(--violet-bd); background:var(--violet-lt);">
+            <div class="d-callout-lbl" style="color:var(--violet);">LLS will</div>
+            <p>Design and deliver curriculum writing professional development, including a hands-on orientation to the unit template and design framework. Provide a structured coaching cadence for teachers as they produce units independently.</p>
+          </div>
         </div>
 
       </div>
@@ -940,8 +1214,8 @@ header {
 
 <script>
 function switchTab(n) {
-  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i === n-1));
-  document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i === n-1));
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i === n));
+  document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i === n));
 }
 
 function switchOpt(tab, opt, btn) {
