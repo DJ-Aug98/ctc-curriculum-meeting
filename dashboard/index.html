@@ -121,15 +121,15 @@ header {
   align-items: center;
   justify-content: center;
   padding: 48px 60px 56px;
-  gap: 40px;
+  gap: 44px;
   overflow-y: auto;
 }
 .vision-anchor {
   text-align: center;
-  max-width: 720px;
+  max-width: 740px;
 }
 .vision-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -137,147 +137,73 @@ header {
   margin-bottom: 16px;
 }
 .vision-statement {
-  font-size: clamp(22px, 2.8vw, 34px);
+  font-size: clamp(24px, 3vw, 38px);
   font-weight: 800;
   color: white;
   line-height: 1.2;
 }
-.vision-statement em {
-  font-style: normal;
-  color: #49c5b1;
-}
+.vision-statement em { font-style: normal; color: #49c5b1; }
 .vision-note {
   margin-top: 14px;
-  font-size: clamp(14px, 1.3vw, 16px);
+  font-size: clamp(14px, 1.3vw, 17px);
   color: var(--slate-400);
 }
 
-/* Timeline */
-.timeline-wrap {
+/* Arrow + phases container */
+.timeline-container {
   width: 100%;
-  max-width: 900px;
-}
-.timeline-track {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 40px;
-  margin-bottom: 0;
-}
-.timeline-start {
-  width: 0;
-  height: 0;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-right: 28px solid rgba(255,255,255,0.15);
-  flex-shrink: 0;
-}
-.timeline-line {
-  flex: 1;
-  height: 4px;
-  background: rgba(255,255,255,0.15);
-  position: relative;
-}
-.timeline-end {
-  width: 0;
-  height: 0;
-  border-top: 14px solid transparent;
-  border-bottom: 14px solid transparent;
-  border-left: 22px solid rgba(255,255,255,0.15);
-  flex-shrink: 0;
-}
-.timeline-years {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  padding-top: 0;
-}
-.timeline-year {
+  max-width: 960px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 0;
 }
-.timeline-tick {
-  width: 2px;
-  height: 20px;
-  background: rgba(255,255,255,0.2);
+.timeline-svg { display: block; width: 100%; overflow: visible; }
+
+/* Phase boxes below arrow */
+.phase-boxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding-top: 12px;
 }
-.timeline-year-label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--slate-400);
-  margin-bottom: 10px;
-  margin-top: 4px;
-}
-.timeline-phase {
-  width: 100%;
-  border-radius: var(--radius);
-  padding: 18px 20px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.04);
-}
-.timeline-phase.current {
-  border-color: rgba(73,197,177,0.4);
-  background: rgba(13,82,87,0.35);
-}
-.timeline-phase-label {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--slate-500);
-  margin-bottom: 8px;
-}
-.timeline-phase.current .timeline-phase-label {
-  color: #49c5b1;
-}
-.timeline-phase-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 10px;
-}
-.timeline-phase.current .timeline-phase-title {
-  color: white;
-}
-.timeline-phase-qs {
+.phase-box {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  padding: 16px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  margin: 0 6px;
+  background: rgba(255,255,255,0.03);
 }
-.timeline-phase-q {
-  font-size: 13px;
-  color: rgba(255,255,255,0.35);
-  padding-left: 14px;
-  position: relative;
-  line-height: 1.4;
+.phase-box.current {
+  border-color: rgba(73,197,177,0.45);
+  background: rgba(13,82,87,0.35);
+  cursor: pointer;
 }
-.timeline-phase-q::before {
-  content: '→';
-  position: absolute;
-  left: 0;
-  color: rgba(255,255,255,0.2);
-  font-size: 11px;
+.phase-box.current:hover { background: rgba(13,82,87,0.5); }
+.phase-box-label {
+  font-size: clamp(15px, 1.5vw, 19px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.04em;
 }
-.timeline-phase.current .timeline-phase-q {
-  color: rgba(255,255,255,0.7);
+.phase-box.current .phase-box-label { color: white; }
+.phase-box-year {
+  font-size: clamp(12px, 1.1vw, 14px);
+  color: rgba(255,255,255,0.25);
+  margin-top: 4px;
 }
-.timeline-phase.current .timeline-phase-q::before {
-  color: #49c5b1;
-}
-.phase-cta {
-  margin-top: 12px;
-  display: inline-block;
+.phase-box.current .phase-box-year { color: #49c5b1; }
+.phase-box-cta {
+  margin-top: 10px;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  color: #49c5b1;
-  cursor: pointer;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: #49c5b1;
 }
-.phase-cta:hover { opacity: 0.75; }
+.phase-box.current:hover .phase-box-cta { text-decoration: underline; }
 
 /* ═══════════════════════════════════════
    TAB 1:HOME
@@ -730,58 +656,53 @@ header {
       <div class="vision-note">A multi-year initiative. This session is where Phase 1 begins.</div>
     </div>
 
-    <div class="timeline-wrap">
-      <div class="timeline-track">
-        <div class="timeline-start"></div>
-        <div class="timeline-line"></div>
-        <div class="timeline-end"></div>
+    <div class="timeline-container">
+
+      <!-- SVG chevron arrow -->
+      <svg class="timeline-svg" viewBox="0 0 900 88" preserveAspectRatio="none">
+        <defs>
+          <clipPath id="arrowClip">
+            <polygon points="0,0 840,0 900,44 840,88 0,88 72,44"/>
+          </clipPath>
+        </defs>
+        <!-- Phase 1 fill (teal) -->
+        <rect x="0" y="0" width="300" height="88" fill="rgba(13,82,87,0.55)" clip-path="url(#arrowClip)"/>
+        <!-- Phase 2 fill -->
+        <rect x="300" y="0" width="300" height="88" fill="rgba(255,255,255,0.04)" clip-path="url(#arrowClip)"/>
+        <!-- Phase 3 fill -->
+        <rect x="600" y="0" width="300" height="88" fill="rgba(255,255,255,0.02)" clip-path="url(#arrowClip)"/>
+        <!-- Arrow outline -->
+        <polygon points="0,0 840,0 900,44 840,88 0,88 72,44"
+                 fill="none"
+                 stroke="rgba(73,197,177,0.45)"
+                 stroke-width="2"
+                 stroke-linejoin="miter"/>
+        <!-- Segment dividers -->
+        <line x1="300" y1="0" x2="300" y2="88" stroke="rgba(73,197,177,0.25)" stroke-width="1.5"/>
+        <line x1="600" y1="0" x2="600" y2="88" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+        <!-- Year labels -->
+        <text x="186" y="50" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="15" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,sans-serif">2025 – 26</text>
+        <text x="450" y="50" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="15" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,sans-serif">2026 – 27</text>
+        <text x="718" y="50" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="15" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,sans-serif">2027 – 28</text>
+      </svg>
+
+      <!-- Phase boxes -->
+      <div class="phase-boxes">
+        <div class="phase-box current" onclick="switchTab(1)">
+          <div class="phase-box-label">Phase 1</div>
+          <div class="phase-box-year">2025 – 26</div>
+          <div class="phase-box-cta">Open →</div>
+        </div>
+        <div class="phase-box">
+          <div class="phase-box-label">Phase 2</div>
+          <div class="phase-box-year">2026 – 27</div>
+        </div>
+        <div class="phase-box">
+          <div class="phase-box-label">Phase 3</div>
+          <div class="phase-box-year">2027 – 28</div>
+        </div>
       </div>
-      <div class="timeline-years">
 
-        <div class="timeline-year">
-          <div class="timeline-tick"></div>
-          <div class="timeline-year-label">2025 – 26</div>
-          <div class="timeline-phase current">
-            <div class="timeline-phase-label">Phase 1 — Now</div>
-            <div class="timeline-phase-title">Laying the Foundation</div>
-            <div class="timeline-phase-qs">
-              <div class="timeline-phase-q">Where does curriculum live?</div>
-              <div class="timeline-phase-q">What is the format of the curriculum?</div>
-              <div class="timeline-phase-q">How does curriculum get produced?</div>
-            </div>
-            <div class="phase-cta" onclick="switchTab(1)">Explore Phase 1 →</div>
-          </div>
-        </div>
-
-        <div class="timeline-year">
-          <div class="timeline-tick"></div>
-          <div class="timeline-year-label">2026 – 27</div>
-          <div class="timeline-phase">
-            <div class="timeline-phase-label">Phase 2</div>
-            <div class="timeline-phase-title">Building the Curriculum</div>
-            <div class="timeline-phase-qs">
-              <div class="timeline-phase-q">Writing units across all programs</div>
-              <div class="timeline-phase-q">Piloting and refining with teachers</div>
-              <div class="timeline-phase-q">Cross-campus consistency established</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-year">
-          <div class="timeline-tick"></div>
-          <div class="timeline-year-label">2027 – 28</div>
-          <div class="timeline-phase">
-            <div class="timeline-phase-label">Phase 3</div>
-            <div class="timeline-phase-title">Sustaining the System</div>
-            <div class="timeline-phase-qs">
-              <div class="timeline-phase-q">Curriculum review cycles in place</div>
-              <div class="timeline-phase-q">Infrastructure supports ongoing updates</div>
-              <div class="timeline-phase-q">Standard, guaranteed, viable — realized</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
 
   </div>
