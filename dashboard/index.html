@@ -472,6 +472,36 @@ header {
 .opt-view { display: none; }
 .opt-view.active { display: block; }
 
+/* ── STRUCTURE IMAGE LAYOUT ── */
+.struct-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.struct-content-col { display: flex; flex-direction: column; gap: 0; }
+.struct-content-col .d-grid { grid-template-columns: 1fr; }
+.struct-img-col {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 4px;
+}
+.struct-img-col img {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.12);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  display: block;
+}
+@media(max-width:900px){
+  .struct-layout { grid-template-columns: 1fr; }
+  .struct-img-col { position: static; }
+}
+
 /* Detail typography */
 .d-eyebrow {
   display: none;
@@ -827,27 +857,34 @@ header {
           <div class="d-eyebrow">Option A:Structure</div>
           <div class="d-title">Google Drive / OneDrive</div>
           <div class="d-sub">Structured folders, shared templates, and an alignment tracker in a spreadsheet. Uses tools already in place.</div>
-          <div class="d-grid">
-            <div class="d-card">
-              <div class="d-card-lbl">+</div>
-              <ul class="d-list pros">
-                <li>Already in use — no new accounts, no new tools</li>
-                <li>Sheets handles the alignment tracker without any setup cost</li>
-                <li>Shareable links work across campuses immediately</li>
-              </ul>
+          <div class="struct-layout">
+            <div class="struct-content-col">
+              <div class="d-grid">
+                <div class="d-card">
+                  <div class="d-card-lbl">+</div>
+                  <ul class="d-list pros">
+                    <li>Already in use — no new accounts, no new tools</li>
+                    <li>Sheets handles the alignment tracker without any setup cost</li>
+                    <li>Shareable links work across campuses immediately</li>
+                  </ul>
+                </div>
+                <div class="d-card">
+                  <div class="d-card-lbl">−</div>
+                  <ul class="d-list cons">
+                    <li>Folders don't enforce structure — anyone can move or rename files</li>
+                    <li>No way to see curriculum across programs without opening every file</li>
+                    <li>Drive search is unreliable at scale; findability degrades over time</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="d-callout" style="border-color:var(--blue-bd); background:var(--blue-lt);">
+                <div class="d-callout-lbl" style="color:var(--blue);">LLS will</div>
+                <p>Design the folder architecture, naming conventions, and shared templates. Deliver a ready-to-use Drive structure and a curriculum alignment tracker teachers can use immediately.</p>
+              </div>
             </div>
-            <div class="d-card">
-              <div class="d-card-lbl">−</div>
-              <ul class="d-list cons">
-                <li>Folders don't enforce structure — anyone can move or rename files</li>
-                <li>No way to see curriculum across programs without opening every file</li>
-                <li>Drive search is unreliable at scale; findability degrades over time</li>
-              </ul>
+            <div class="struct-img-col">
+              <img src="../assets/Structure_01.png" alt="Google Drive folder structure example">
             </div>
-          </div>
-          <div class="d-callout" style="border-color:var(--blue-bd); background:var(--blue-lt);">
-            <div class="d-callout-lbl" style="color:var(--blue);">LLS will</div>
-            <p>Design the folder architecture, naming conventions, and shared templates. Deliver a ready-to-use Drive structure and a curriculum alignment tracker teachers can use immediately.</p>
           </div>
         </div>
 
@@ -855,27 +892,34 @@ header {
           <div class="d-eyebrow">Option B:Structure</div>
           <div class="d-title">Notion</div>
           <div class="d-sub">A relational workspace where units, competencies, and assessments are linked, not just filed. Leadership visibility across programs and campuses.</div>
-          <div class="d-grid">
-            <div class="d-card">
-              <div class="d-card-lbl">+</div>
-              <ul class="d-list pros">
-                <li>Free for most use cases; paid plan unlocks larger teams and guests</li>
-                <li>Units, programs, and competencies can be linked — not just filed</li>
-                <li>Filtered views let leadership see across programs and campuses</li>
-              </ul>
+          <div class="struct-layout">
+            <div class="struct-content-col">
+              <div class="d-grid">
+                <div class="d-card">
+                  <div class="d-card-lbl">+</div>
+                  <ul class="d-list pros">
+                    <li>Free for most use cases; paid plan unlocks larger teams and guests</li>
+                    <li>Units, programs, and competencies can be linked — not just filed</li>
+                    <li>Filtered views let leadership see across programs and campuses</li>
+                  </ul>
+                </div>
+                <div class="d-card">
+                  <div class="d-card-lbl">−</div>
+                  <ul class="d-list cons">
+                    <li>Notion requires intentional setup — it won't organize itself</li>
+                    <li>Teachers/coaches need onboarding before it's usable in practice</li>
+                    <li>Curriculum-specific logic has to be built manually; no CTE templates out of the box</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="d-callout" style="border-color:var(--blue-bd); background:var(--blue-lt);">
+                <div class="d-callout-lbl" style="color:var(--blue);">LLS will</div>
+                <p>Build and configure the Notion workspace with linked databases for programs, units, and competencies. Deliver a functional system with documentation and a teacher/coach onboarding guide.</p>
+              </div>
             </div>
-            <div class="d-card">
-              <div class="d-card-lbl">−</div>
-              <ul class="d-list cons">
-                <li>Notion requires intentional setup — it won't organize itself</li>
-                <li>Teachers need onboarding before it's usable in practice</li>
-                <li>Curriculum-specific logic has to be built manually; no CTE templates out of the box</li>
-              </ul>
+            <div class="struct-img-col">
+              <img src="../assets/Structure_02.png" alt="Notion workspace example">
             </div>
-          </div>
-          <div class="d-callout" style="border-color:var(--blue-bd); background:var(--blue-lt);">
-            <div class="d-callout-lbl" style="color:var(--blue);">LLS will</div>
-            <p>Build and configure the Notion workspace with linked databases for programs, units, and competencies. Deliver a functional system with documentation and a teacher onboarding guide.</p>
           </div>
         </div>
 
@@ -883,27 +927,34 @@ header {
           <div class="d-eyebrow">Option C:Structure</div>
           <div class="d-title">Curriculum Platforms</div>
           <div class="d-sub">Dedicated curriculum mapping software with alignment, cross-campus visibility, and reporting built in. Atlas, Chalk, Toddle, Curriculum Trak.</div>
-          <div class="d-grid">
-            <div class="d-card">
-              <div class="d-card-lbl">+</div>
-              <ul class="d-list pros">
-                <li>Built for this purpose; alignment and reporting included</li>
-                <li>Highest long-term ceiling</li>
-                <li>Leadership visibility without extra work</li>
-              </ul>
+          <div class="struct-layout">
+            <div class="struct-content-col">
+              <div class="d-grid">
+                <div class="d-card">
+                  <div class="d-card-lbl">+</div>
+                  <ul class="d-list pros">
+                    <li>Built for this purpose; alignment and reporting included</li>
+                    <li>Highest long-term ceiling</li>
+                    <li>Leadership visibility without extra work</li>
+                  </ul>
+                </div>
+                <div class="d-card">
+                  <div class="d-card-lbl">−</div>
+                  <ul class="d-list cons">
+                    <li>Real licensing cost</li>
+                    <li>Onboarding and change management required</li>
+                    <li>Most effective once a writing process is established</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="d-callout" style="border-color:var(--blue-bd); background:var(--blue-lt);">
+                <div class="d-callout-lbl" style="color:var(--blue);">LLS will</div>
+                <p>Evaluate platform options against CTC's needs, facilitate the selection process, and support implementation planning. Guide curriculum import and configuration once a platform is selected.</p>
+              </div>
             </div>
-            <div class="d-card">
-              <div class="d-card-lbl">−</div>
-              <ul class="d-list cons">
-                <li>Real licensing cost</li>
-                <li>Onboarding and change management required</li>
-                <li>A platform with no curriculum in it solves nothing; process first</li>
-              </ul>
+            <div class="struct-img-col">
+              <img src="../assets/Structure_03.png" alt="Curriculum platform example">
             </div>
-          </div>
-          <div class="d-callout" style="border-color:var(--blue-bd); background:var(--blue-lt);">
-            <div class="d-callout-lbl" style="color:var(--blue);">LLS will</div>
-            <p>Evaluate platform options against CTC's needs, facilitate the selection process, and support implementation planning. Guide curriculum import and configuration once a platform is selected.</p>
           </div>
         </div>
 
@@ -957,27 +1008,34 @@ header {
           <div class="d-eyebrow">Option A:Design</div>
           <div class="d-title">Task-List First</div>
           <div class="d-sub">The state task list drives the structure. Skills are sequenced into a scope and sequence; assessments are built around demonstrated competency.</div>
-          <div class="d-grid">
-            <div class="d-card">
-              <div class="d-card-lbl">+</div>
-              <ul class="d-list pros">
-                <li>Directly accountable to credential requirements</li>
-                <li>Teachers recognize the structure from their industry background</li>
-                <li>Clearest path from task list to classroom</li>
-              </ul>
+          <div class="struct-layout">
+            <div class="struct-content-col">
+              <div class="d-grid">
+                <div class="d-card">
+                  <div class="d-card-lbl">+</div>
+                  <ul class="d-list pros">
+                    <li>Directly accountable to credential requirements</li>
+                    <li>Teachers recognize the structure from their industry background</li>
+                    <li>Clearest path from task list to classroom</li>
+                  </ul>
+                </div>
+                <div class="d-card">
+                  <div class="d-card-lbl">−</div>
+                  <ul class="d-list cons">
+                    <li>Risk of checklist curriculum; skills without coherence or transferability</li>
+                    <li>Assessment can drift toward compliance rather than demonstration</li>
+                    <li>"Why does this matter?" stays unanswered</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="d-callout" style="border-color:var(--crimson-bd); background:var(--crimson-lt);">
+                <div class="d-callout-lbl" style="color:var(--crimson);">LLS will</div>
+                <p>Source and organize the state task lists for each program, facilitate the scope and sequence mapping, and deliver a structured competency framework ready for unit writing.</p>
+              </div>
             </div>
-            <div class="d-card">
-              <div class="d-card-lbl">−</div>
-              <ul class="d-list cons">
-                <li>Risk of checklist curriculum; skills without coherence or transferability</li>
-                <li>Assessment can drift toward compliance rather than demonstration</li>
-                <li>"Why does this matter?" stays unanswered</li>
-              </ul>
+            <div class="struct-img-col">
+              <img src="../assets/Design_01.png" alt="Task-list first design example">
             </div>
-          </div>
-          <div class="d-callout" style="border-color:var(--crimson-bd); background:var(--crimson-lt);">
-            <div class="d-callout-lbl" style="color:var(--crimson);">LLS will</div>
-            <p>Source and organize the state task lists for each program, facilitate the scope and sequence mapping, and deliver a structured competency framework ready for unit writing.</p>
           </div>
         </div>
 
@@ -985,27 +1043,34 @@ header {
           <div class="d-eyebrow">Option B:Design</div>
           <div class="d-title">UbD First</div>
           <div class="d-sub">Design backward from enduring understandings. Task list competencies are embedded as the knowledge and skills students need to reach those understandings.</div>
-          <div class="d-grid">
-            <div class="d-card">
-              <div class="d-card-lbl">+</div>
-              <ul class="d-list pros">
-                <li>Builds coherent, transferable curriculum; skills have a "why"</li>
-                <li>Assessment is authentic, designed before instruction</li>
-                <li>Task list stops being a ceiling; it becomes the floor</li>
-              </ul>
+          <div class="struct-layout">
+            <div class="struct-content-col">
+              <div class="d-grid">
+                <div class="d-card">
+                  <div class="d-card-lbl">+</div>
+                  <ul class="d-list pros">
+                    <li>Builds coherent, transferable curriculum; skills have a "why"</li>
+                    <li>Assessment is authentic, designed before instruction</li>
+                    <li>Task list stops being a ceiling; it becomes the floor</li>
+                  </ul>
+                </div>
+                <div class="d-card">
+                  <div class="d-card-lbl">−</div>
+                  <ul class="d-list cons">
+                    <li>Enduring understandings are harder to write than they look</li>
+                    <li>May feel abstract to CTE practitioners at first</li>
+                    <li>Requires facilitated writing; not a solo or template-fill exercise</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="d-callout" style="border-color:var(--crimson-bd); background:var(--crimson-lt);">
+                <div class="d-callout-lbl" style="color:var(--crimson);">LLS will</div>
+                <p>Facilitate enduring understanding and essential question development with teachers/coaches. Deliver completed Stage 1 frameworks for each program, grounded in teacher/coach expertise and ready for unit writing.</p>
+              </div>
             </div>
-            <div class="d-card">
-              <div class="d-card-lbl">−</div>
-              <ul class="d-list cons">
-                <li>Enduring understandings are harder to write than they look</li>
-                <li>May feel abstract to CTE practitioners at first</li>
-                <li>Requires facilitated writing; not a solo or template-fill exercise</li>
-              </ul>
+            <div class="struct-img-col">
+              <img src="../assets/Design_02.png" alt="UbD first design example">
             </div>
-          </div>
-          <div class="d-callout" style="border-color:var(--crimson-bd); background:var(--crimson-lt);">
-            <div class="d-callout-lbl" style="color:var(--crimson);">LLS will</div>
-            <p>Facilitate enduring understanding and essential question development with teachers. Deliver completed Stage 1 frameworks for each program, grounded in teacher expertise and ready for unit writing.</p>
           </div>
         </div>
 
@@ -1013,27 +1078,34 @@ header {
           <div class="d-eyebrow">Option C:Design</div>
           <div class="d-title">Task List Anchors UbD</div>
           <div class="d-sub">The task list organizes the competency clusters. UbD provides the design logic: enduring understandings, performance tasks, and learning arcs, organized around those clusters.</div>
-          <div class="d-grid">
-            <div class="d-card">
-              <div class="d-card-lbl">+</div>
-              <ul class="d-list pros">
-                <li>Credential accountability and transferable understanding in the same structure</li>
-                <li>Both LLS specialists and teachers have a concrete entry point</li>
-                <li>Most likely to produce curriculum that is standard, guaranteed, and viable</li>
-              </ul>
+          <div class="struct-layout">
+            <div class="struct-content-col">
+              <div class="d-grid">
+                <div class="d-card">
+                  <div class="d-card-lbl">+</div>
+                  <ul class="d-list pros">
+                    <li>Credential accountability and transferable understanding in the same structure</li>
+                    <li>Both LLS specialists and teachers/coaches have a concrete entry point</li>
+                    <li>Most likely to produce curriculum that is standard, guaranteed, and viable</li>
+                  </ul>
+                </div>
+                <div class="d-card">
+                  <div class="d-card-lbl">−</div>
+                  <ul class="d-list cons">
+                    <li>Requires fluency in both frameworks; the build is more complex</li>
+                    <li>Risk of UbD becoming decorative if the task list dominates in practice</li>
+                    <li>Takes the longest to build well; front-loads the investment</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="d-callout" style="border-color:var(--crimson-bd); background:var(--crimson-lt);">
+                <div class="d-callout-lbl" style="color:var(--crimson);">LLS will</div>
+                <p>Lead the competency clustering process using the state task list, then facilitate UbD design sessions to wrap enduring understandings and performance tasks around each cluster. Deliver integrated unit frameworks for each program.</p>
+              </div>
             </div>
-            <div class="d-card">
-              <div class="d-card-lbl">−</div>
-              <ul class="d-list cons">
-                <li>Requires fluency in both frameworks; the build is more complex</li>
-                <li>Risk of UbD becoming decorative if the task list dominates in practice</li>
-                <li>Takes the longest to build well; front-loads the investment</li>
-              </ul>
+            <div class="struct-img-col">
+              <img src="../assets/Design_03.png" alt="Task list anchors UbD example">
             </div>
-          </div>
-          <div class="d-callout" style="border-color:var(--crimson-bd); background:var(--crimson-lt);">
-            <div class="d-callout-lbl" style="color:var(--crimson);">LLS will</div>
-            <p>Lead the competency clustering process using the state task list, then facilitate UbD design sessions to wrap enduring understandings and performance tasks around each cluster. Deliver integrated unit frameworks for each program.</p>
           </div>
         </div>
 
