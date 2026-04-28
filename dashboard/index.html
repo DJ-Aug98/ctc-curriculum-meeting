@@ -273,7 +273,7 @@ header {
 }
 
 .idea-q {
-  font-size: clamp(22px, 2.8vw, 34px);
+  font-size: clamp(26px, 3.2vw, 40px);
   font-weight: 800;
   color: white;
   line-height: 1.35;
@@ -288,8 +288,8 @@ header {
 .flow {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  max-width: 780px;
+  gap: 18px;
+  max-width: 940px;
   width: 100%;
 }
 
@@ -297,10 +297,11 @@ header {
 
 .flow-card {
   border-radius: var(--radius);
-  padding: 28px 26px;
+  padding: 36px 30px;
   cursor: pointer;
   transition: opacity 0.15s, transform 0.12s;
   border: 1.5px solid transparent;
+  text-align: center;
 }
 .flow-card:hover { opacity: 0.85; transform: translateY(-2px); }
 
@@ -320,7 +321,7 @@ header {
 }
 
 .flow-title {
-  font-size: clamp(15px, 1.6vw, 19px);
+  font-size: clamp(17px, 1.9vw, 23px);
   font-weight: 700;
   color: white;
   line-height: 1.3;
@@ -491,7 +492,7 @@ header {
 }
 .struct-img-col img {
   width: 100%;
-  max-width: 480px;
+  max-width: 580px;
   border-radius: 10px;
   border: 1px solid rgba(0,0,0,0.12);
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
@@ -806,7 +807,7 @@ header {
 
       <div class="flow-card violet" onclick="switchTab(4)">
         <div class="flow-num">Build</div>
-        <div class="flow-title">How does curriculum actually get produced?</div>
+        <div class="flow-title">How is curriculum produced?</div>
       </div>
     </div>
 
@@ -846,7 +847,7 @@ header {
 
       <div class="sidebar-note">
         <div class="sidebar-note-lbl">A question for the room</div>
-        <div class="sidebar-note-text" style="font-weight:700; color:rgba(255,255,255,0.75);">How do we build CTE curriculum that is standard, guaranteed, and viable across all three campuses?</div>
+        <div class="sidebar-note-text" style="font-weight:700; color:rgba(255,255,255,0.75);">Where does curriculum live?</div>
       </div>
     </div>
 
@@ -863,7 +864,7 @@ header {
                 <div class="d-card">
                   <div class="d-card-lbl">+</div>
                   <ul class="d-list pros">
-                    <li>Already in use — no new accounts, no new tools</li>
+                    <li>Already in use: no new accounts, no new tools</li>
                     <li>Sheets handles the alignment tracker without any setup cost</li>
                     <li>Shareable links work across campuses immediately</li>
                   </ul>
@@ -871,7 +872,7 @@ header {
                 <div class="d-card">
                   <div class="d-card-lbl">−</div>
                   <ul class="d-list cons">
-                    <li>Folders don't enforce structure — anyone can move or rename files</li>
+                    <li>Folders don't enforce structure; anyone can move or rename files</li>
                     <li>No way to see curriculum across programs without opening every file</li>
                     <li>Drive search is unreliable at scale; findability degrades over time</li>
                   </ul>
@@ -899,14 +900,14 @@ header {
                   <div class="d-card-lbl">+</div>
                   <ul class="d-list pros">
                     <li>Free for most use cases; paid plan unlocks larger teams and guests</li>
-                    <li>Units, programs, and competencies can be linked — not just filed</li>
+                    <li>Units, programs, and competencies can be linked, not just filed</li>
                     <li>Filtered views let leadership see across programs and campuses</li>
                   </ul>
                 </div>
                 <div class="d-card">
                   <div class="d-card-lbl">−</div>
                   <ul class="d-list cons">
-                    <li>Notion requires intentional setup — it won't organize itself</li>
+                    <li>Notion requires intentional setup; it won't organize itself</li>
                     <li>Teachers/coaches need onboarding before it's usable in practice</li>
                     <li>Curriculum-specific logic has to be built manually; no CTE templates out of the box</li>
                   </ul>
@@ -974,7 +975,7 @@ header {
         <div class="opt-dot"></div>
         <div>
           <div class="opt-btn-letter">Option A</div>
-          <div class="opt-btn-name">Competency-First</div>
+          <div class="opt-btn-name">Task-List First</div>
           <div class="opt-btn-sub">Start from the state task list</div>
         </div>
       </div>
@@ -997,7 +998,7 @@ header {
 
       <div class="sidebar-note">
         <div class="sidebar-note-lbl">A question for the room</div>
-        <div class="sidebar-note-text" style="font-weight:700; color:rgba(255,255,255,0.75);">How do we build CTE curriculum that is standard, guaranteed, and viable across all three campuses?</div>
+        <div class="sidebar-note-text" style="font-weight:700; color:rgba(255,255,255,0.75);">What is the format of the curriculum?</div>
       </div>
     </div>
 
@@ -1024,7 +1025,7 @@ header {
                   <ul class="d-list cons">
                     <li>Risk of checklist curriculum; skills without coherence or transferability</li>
                     <li>Assessment can drift toward compliance rather than demonstration</li>
-                    <li>"Why does this matter?" stays unanswered</li>
+                    <li>Does not immediately connect to bigger ideas or essential questions</li>
                   </ul>
                 </div>
               </div>
@@ -1058,8 +1059,8 @@ header {
                   <div class="d-card-lbl">−</div>
                   <ul class="d-list cons">
                     <li>Enduring understandings are harder to write than they look</li>
-                    <li>May feel abstract to CTE practitioners at first</li>
-                    <li>Requires facilitated writing; not a solo or template-fill exercise</li>
+                    <li>More abstract than traditional task list</li>
+                    <li>Requires facilitated writing or PD on UbD</li>
                   </ul>
                 </div>
               </div>
@@ -1148,7 +1149,7 @@ header {
 
       <div class="sidebar-note">
         <div class="sidebar-note-lbl">A question for the room</div>
-        <div class="sidebar-note-text" style="font-weight:700; color:rgba(255,255,255,0.75);">How do we build CTE curriculum that is standard, guaranteed, and viable across all three campuses?</div>
+        <div class="sidebar-note-text" style="font-weight:700; color:rgba(255,255,255,0.75);">How is curriculum produced?</div>
       </div>
     </div>
 
@@ -1163,7 +1164,7 @@ header {
             <div class="d-card">
               <div class="d-card-lbl">+</div>
               <ul class="d-list pros">
-                <li>Teachers/coaches see a finished product before they try to produce one</li>
+                <li>Teachers/coaches see a finished product before they produce one</li>
                 <li>No ambiguity about what "done" looks like; the exemplar shows it</li>
                 <li>Strongest quality control on the first unit</li>
               </ul>
@@ -1219,9 +1220,9 @@ header {
             <div class="d-card">
               <div class="d-card-lbl">+</div>
               <ul class="d-list pros">
-                <li>Builds teacher/coach independence; they can produce without LLS in the room</li>
+                <li>Builds teacher/coach independence</li>
                 <li>Scales better once teachers/coaches internalize the framework</li>
-                <li>Lower ongoing LLS time commitment after the PD is delivered</li>
+                <li>Higher ownership and expertise of units</li>
               </ul>
             </div>
             <div class="d-card">
