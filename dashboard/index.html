@@ -39,6 +39,25 @@
 html, body { height: 100%; }
 body { font-family: var(--font); background: var(--slate-100); color: var(--slate-800); display: flex; flex-direction: column; overflow: hidden; }
 
+/* ── EXAMPLE BADGE ── */
+.example-badge {
+  position: fixed;
+  top: 72px;
+  right: 20px;
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  pointer-events: none;
+}
+
 /* ── HEADER ── */
 header {
   background: var(--blue);
@@ -707,6 +726,8 @@ header {
   <div class="hdr-divider"></div>
   <div class="hdr-title">LLS &nbsp;|&nbsp; CTE Curriculum Brainstorming</div>
 </header>
+
+<div class="example-badge">Example</div>
 
 <div class="tab-bar">
   <div class="tab t1 active" onclick="switchTab(0)">Vision</div>
