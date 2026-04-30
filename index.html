@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLS | CTE Curriculum Brainstorming</title>
+<style>
+:root {
+  --blue: #004f71;
+  --blue-lt: #e6f2f7;
+  --blue-bd: #8dc8e8;
+  --blue-dk: #003352;
+  --teal: #0d5257;
+  --teal-lt: #e4f0f0;
+  --teal-bd: #49c5b1;
+  --violet: #8246af;
+  --violet-lt: #f0eaf7;
+  --violet-bd: #d7c6e6;
+  --amber: #e56a54;
+  --amber-lt: #fff0ee;
+  --amber-bd: #ffb3ab;
+  --crimson: #8a1e41;
+  --crimson-lt: #f5e8ed;
+  --crimson-bd: #c4728e;
+  --slate-50:  #F8FAFC;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+  --slate-300: #CBD5E1;
+  --slate-400: #94A3B8;
+  --slate-500: #64748B;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1E293B;
+  --slate-900: #0F172A;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif;
+  --radius: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body { font-family: var(--font); background: var(--slate-100); color: var(--slate-800); display: flex; flex-direction: column; overflow: hidden; }
+
+/* ── EXAMPLE BADGE ── */
+.example-badge {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: rgba(0,0,0,0.07);
+  color: rgba(0,0,0,0.35);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.12);
+  z-index: 10;
+  pointer-events: none;
+}
+#p2 .opt-main, #p3 .opt-main, #p4 .opt-main { position: relative; }
+#p1 .example-badge {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.6);
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--blue);
+  padding: 0 28px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.hdr-logo-img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  opacity: 0.9;
+}
+.hdr-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255,255,255,0.25);
+  margin: 0 20px;
+  flex-shrink: 0;
+}
+.hdr-title {
+  font-size: clamp(12px, 1.3vw, 14px);
+  font-weight: 600;
+  color: var(--slate-300);
+  letter-spacing: 0.01em;
+}
+
+/* ── TAB BAR ── */
+.tab-bar {
+  background: var(--blue);
+  display: flex;
+  padding: 0 32px;
+  gap: 2px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.tab {
+  padding: 11px 20px;
+  font-size: clamp(12px, 1.1vw, 13px);
+  font-weight: 600;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+  letter-spacing: 0.02em;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tab:hover { color: rgba(255,255,255,0.8); }
+.tab-num {
+  font-size: 9px;
+  font-weight: 700;
+  opacity: 0.5;
+}
+.tab.active .tab-num { opacity: 1; }
+.tab.t1.active { color: white; border-bottom-color: rgba(255,255,255,0.6); }
+.tab.t2.active { color: white; border-bottom-color: var(--blue-bd); }
+.tab.t3.active { color: white; border-bottom-color: var(--crimson-bd); }
+.tab.t4.active { color: white; border-bottom-color: var(--violet-bd); }
+.tab.t5.active { color: white; border-bottom-color: var(--amber-bd); }
+
+/* ── CONTENT ── */
+.content { flex: 1; overflow: hidden; position: relative; }
+.panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.97);
+  z-index: 0;
+}
+.panel.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+  z-index: 1;
+  animation: panelIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.panel.leaving {
+  animation: panelOut 0.28s ease forwards;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes panelIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes panelOut {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.98); }
+}
+
+/* Phase 1 expands outward from where the Phase 1 box sits on the Vision screen */
+#p1.active {
+  animation: phase1Expand 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: 17% 78%;
+}
+@keyframes phase1Expand {
+  from { opacity: 0; transform: scale(0.35); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ═══════════════════════════════════════
+   TAB 0:VISION / LANDING
+═══════════════════════════════════════ */
+#p0 {
+  background: var(--slate-900);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 60px 56px;
+  gap: 44px;
+  overflow-y: auto;
+}
+.vision-anchor {
+  text-align: center;
+  max-width: 1100px;
+}
+.vision-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+  margin-bottom: 16px;
+}
+.vision-statement {
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 800;
+  color: white;
+  line-height: 1.2;
+}
+.vision-statement em { font-style: normal; color: #49c5b1; }
+.vision-note {
+  margin-top: 14px;
+  font-size: clamp(14px, 1.3vw, 17px);
+  color: var(--slate-400);
+}
+
+/* Arrow + phases container */
+.timeline-container {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.timeline-svg { display: block; width: 100%; overflow: visible; }
+
+/* Phase boxes below arrow */
+.phase-boxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding-top: 12px;
+}
+.phase-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  margin: 0 6px;
+  background: rgba(255,255,255,0.03);
+}
+.phase-box.current {
+  border-color: rgba(73,197,177,0.55);
+  background: rgba(73,197,177,0.12);
+  cursor: pointer;
+}
+.phase-box.current:hover { background: rgba(73,197,177,0.2); }
+.phase-box-label {
+  font-size: clamp(15px, 1.5vw, 19px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.04em;
+}
+.phase-box.current .phase-box-label { color: white; }
+.phase-box-year {
+  font-size: clamp(12px, 1.1vw, 14px);
+  color: rgba(255,255,255,0.25);
+  margin-top: 4px;
+}
+.phase-box.current .phase-box-year { color: #49c5b1; }
+.phase-box-cta {
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #49c5b1;
+}
+.phase-box.current:hover .phase-box-cta { text-decoration: underline; }
+
+/* ═══════════════════════════════════════
+   TAB 1:HOME
+═══════════════════════════════════════ */
+#p1 {
+  background: var(--slate-900);
+  align-items: center;
+  padding: 56px 40px 56px;
+  gap: 48px;
+  overflow-y: auto;
+}
+
+.idea-frame {
+  max-width: 1100px;
+  width: 100%;
+  text-align: center;
+}
+
+.idea-q-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--slate-600);
+  margin-bottom: 20px;
+}
+
+.idea-q {
+  font-size: clamp(26px, 3.2vw, 40px);
+  font-weight: 800;
+  color: white;
+  line-height: 1.35;
+  margin-bottom: 0;
+}
+
+.idea-q em {
+  font-style: normal;
+  color: #49c5b1;
+}
+
+.flow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: 940px;
+  width: 100%;
+}
+
+.flow-arrow { display: none; }
+
+.flow-card {
+  border-radius: var(--radius);
+  padding: 36px 30px;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.12s;
+  border: 1.5px solid transparent;
+  text-align: center;
+}
+.flow-card:hover { opacity: 0.85; transform: translateY(-2px); }
+
+.flow-card.blue   { background: rgba(0,79,113,0.35);   border-color: rgba(141,200,232,0.3); }
+.flow-card.teal    { background: rgba(13,82,87,0.35);   border-color: rgba(73,197,177,0.3); }
+.flow-card.crimson { background: rgba(138,30,65,0.4);  border-color: rgba(196,114,142,0.4); }
+.flow-card.violet { background: rgba(60,16,83,0.35);   border-color: rgba(215,198,230,0.3); }
+.flow-card.amber  { background: rgba(138,30,65,0.35);  border-color: rgba(255,179,171,0.3); }
+
+.flow-num {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 10px;
+}
+
+.flow-title {
+  font-size: clamp(17px, 1.9vw, 23px);
+  font-weight: 700;
+  color: white;
+  line-height: 1.3;
+}
+
+.flow-desc { display: none; }
+.flow-link { display: none; }
+
+/* ═══════════════════════════════════════
+   TABS 2, 3, 4:SHARED LAYOUT
+═══════════════════════════════════════ */
+#p2, #p3, #p4, #p5 { flex-direction: row; overflow: hidden; overflow-y: hidden; }
+
+/* Sidebar */
+.opt-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  background: var(--slate-900);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 24px 0;
+}
+.sidebar-section-title {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  padding: 0 20px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 10px;
+}
+.opt-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 20px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: background 0.12s;
+  position: relative;
+}
+.opt-btn:hover { background: rgba(255,255,255,0.06); }
+.opt-btn.active { background: rgba(255,255,255,0.12); }
+.opt-btn.active.c-blue   { border-left-color: var(--blue-bd); }
+.opt-btn.active.c-teal    { border-left-color: var(--teal-bd); }
+.opt-btn.active.c-crimson { border-left-color: var(--crimson-bd); }
+.opt-btn.active.c-violet { border-left-color: var(--violet-bd); }
+.opt-btn.active.c-amber  { border-left-color: var(--amber-bd); }
+
+.opt-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.25);
+  margin-top: 5px;
+  flex-shrink: 0;
+  transition: all 0.12s;
+}
+.opt-btn.active.c-blue   .opt-dot { background: var(--blue-bd);   border-color: var(--blue-bd); }
+.opt-btn.active.c-teal    .opt-dot { background: var(--teal-bd);    border-color: var(--teal-bd); }
+.opt-btn.active.c-crimson .opt-dot { background: var(--crimson-bd); border-color: var(--crimson-bd); }
+.opt-btn.active.c-violet .opt-dot { background: var(--violet-bd); border-color: var(--violet-bd); }
+.opt-btn.active.c-amber  .opt-dot { background: var(--amber-bd);  border-color: var(--amber-bd); }
+
+.opt-btn-letter {
+  display: none;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 2px;
+}
+.opt-btn.active .opt-btn-letter { color: rgba(255,255,255,0.65); }
+.opt-btn-name {
+  font-size: clamp(12px, 1.1vw, 13px);
+  font-weight: 600;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.3;
+}
+.opt-btn.active .opt-btn-name { color: white; }
+.opt-btn-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+.opt-btn.active .opt-btn-sub { color: rgba(255,255,255,0.55); }
+
+.sidebar-note {
+  margin-top: auto;
+  padding: 18px 20px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.sidebar-note-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 6px;
+}
+.sidebar-note-text {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.65;
+}
+
+/* ── PER-PANEL SIDEBAR COLORS ── */
+#p2 .opt-sidebar { background: var(--blue); }
+#p3 .opt-sidebar { background: var(--crimson); }
+#p4 .opt-sidebar { background: #3c1053; }
+#p5 .opt-sidebar { background: var(--crimson); }
+
+/* ── PER-PANEL DETAIL TINTS ── */
+#p2 .detail-pane { background: var(--blue-lt); }
+#p3 .detail-pane { background: var(--crimson-lt); }
+#p4 .detail-pane { background: var(--violet-lt); }
+#p5 .detail-pane { background: var(--amber-lt); }
+
+/* ── PER-PANEL CARD ACCENTS ── */
+#p2 .d-card { border-color: var(--blue-bd); }
+#p3 .d-card { border-color: var(--crimson-bd); }
+#p4 .d-card { border-color: var(--violet-bd); }
+#p5 .d-card { border-color: var(--amber-bd); }
+
+#p2 .d-card-lbl { color: var(--blue); }
+#p3 .d-card-lbl { color: var(--crimson); }
+#p4 .d-card-lbl { color: var(--violet); }
+#p5 .d-card-lbl { color: var(--crimson); }
+
+#p2 .d-eyebrow { color: var(--blue); }
+#p3 .d-eyebrow { color: var(--crimson); }
+#p4 .d-eyebrow { color: var(--violet); }
+#p5 .d-eyebrow { color: var(--crimson); }
+
+/* Main area */
+.opt-main { flex: 1; display: flex; overflow: hidden; }
+
+.detail-pane {
+  flex: 1;
+  overflow-y: auto;
+  padding: clamp(24px, 3vw, 36px);
+  background: var(--slate-50);
+}
+
+.opt-view { display: none; }
+.opt-view.active { display: block; }
+
+/* ── STRUCTURE IMAGE LAYOUT ── */
+.struct-layout {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 28px;
+  align-items: start;
+}
+.struct-content-col { display: flex; flex-direction: column; gap: 0; }
+.struct-content-col .d-grid { grid-template-columns: 1fr; }
+.struct-img-col {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 4px;
+}
+.struct-img-col img {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.12);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  display: block;
+}
+@media(max-width:900px){
+  .struct-layout { grid-template-columns: 1fr; }
+  .struct-img-col { position: static; }
+}
+
+/* Detail typography */
+.d-eyebrow {
+  display: none;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate-400);
+  margin-bottom: 6px;
+}
+.d-title {
+  font-size: clamp(26px, 2.8vw, 36px);
+  font-weight: 800;
+  color: var(--slate-800);
+  margin-bottom: 8px;
+  line-height: 1.15;
+}
+.d-sub {
+  font-size: clamp(16px, 1.5vw, 19px);
+  color: var(--slate-500);
+  line-height: 1.7;
+  margin-bottom: 26px;
+  max-width: 620px;
+}
+
+.d-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+@media(max-width:860px){ .d-grid { grid-template-columns: 1fr; } }
+
+.d-card {
+  background: white;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.d-card-lbl {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate-400);
+  margin-bottom: 10px;
+}
+.d-list { list-style: none; }
+.d-list li {
+  font-size: clamp(16px, 1.4vw, 18px);
+  color: var(--slate-700);
+  padding: 5px 0 5px 15px;
+  position: relative;
+  border-bottom: 1px solid var(--slate-100);
+  line-height: 1.5;
+}
+.d-list li:last-child { border-bottom: none; }
+.d-list.pros li::before { content: '+'; position: absolute; left: 0; color: #16A34A; font-weight: 700; }
+.d-list.cons li::before { content: '–'; position: absolute; left: 0; color: #DC2626; }
+.d-list.items li::before { content: '→'; position: absolute; left: 0; color: var(--slate-400); }
+
+.d-callout {
+  background: white;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+.d-callout.full { grid-column: 1 / -1; }
+.d-callout-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate-400);
+  margin-bottom: 8px;
+}
+.d-callout p {
+  font-size: clamp(15px, 1.3vw, 17px);
+  color: var(--slate-600);
+  line-height: 1.75;
+}
+
+/* Compare pane */
+.compare-pane {
+  width: 280px;
+  flex-shrink: 0;
+  background: white;
+  border-left: 1px solid var(--slate-200);
+  overflow-y: auto;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.compare-hdr {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate-400);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--slate-200);
+}
+.cmp-opt { padding: 13px 0; border-bottom: 1px solid var(--slate-100); }
+.cmp-opt:last-of-type { border-bottom: none; }
+.cmp-opt-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.cmp-opt-name {
+  font-size: clamp(11px, 1.1vw, 13px);
+  font-weight: 700;
+  color: var(--slate-700);
+}
+.cmp-tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.cmp-tag.viewing-blue   { background: var(--blue-lt);   color: var(--blue); }
+.cmp-tag.viewing-teal   { background: var(--teal-lt);   color: var(--teal); }
+.cmp-tag.viewing-violet { background: var(--violet-lt); color: var(--violet); }
+.cmp-tag.viewing-amber  { background: var(--amber-lt);  color: var(--amber); }
+.cmp-opt-desc {
+  font-size: 11px;
+  color: var(--slate-500);
+  line-height: 1.6;
+}
+.cmp-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--slate-200);
+}
+.cmp-footer-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--slate-400);
+  margin-bottom: 6px;
+}
+.cmp-footer-text {
+  font-size: 11px;
+  color: var(--slate-500);
+  line-height: 1.65;
+}
+
+/* Arc (Tab 4) */
+.arc-wrap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+@media(max-width:800px){ .arc-wrap { grid-template-columns: repeat(2,1fr); } }
+.arc-box {
+  background: white;
+  border: 1px solid var(--slate-200);
+  border-radius: 8px;
+  padding: 16px;
+  position: relative;
+}
+.arc-num {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 5px;
+}
+.arc-title {
+  font-size: clamp(12px, 1.2vw, 14px);
+  font-weight: 700;
+  color: var(--slate-800);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.arc-desc {
+  font-size: 11px;
+  color: var(--slate-500);
+  line-height: 1.6;
+}
+.arc-time {
+  font-size: 10px;
+  color: var(--slate-400);
+  margin-top: 8px;
+  font-style: italic;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <img class="hdr-logo-img" src="assets/cciu_logo copy.png" alt="CCIU">
+  <div class="hdr-divider"></div>
+  <div class="hdr-title">LLS &nbsp;|&nbsp; CTE Curriculum Brainstorming</div>
+</header>
+
+<div class="tab-bar">
+  <div class="tab t1 active" onclick="switchTab(0)">Vision</div>
+  <div class="tab t1" onclick="switchTab(1)">Phase 1</div>
+  <div class="tab t2" onclick="switchTab(2)">Structure</div>
+  <div class="tab t3" onclick="switchTab(3)">Design</div>
+  <div class="tab t4" onclick="switchTab(4)">Build</div>
+</div>
+
+<div class="content">
+
+  <!-- ══════════════════════════════════
+       TAB 0:VISION
+  ══════════════════════════════════ -->
+  <div class="panel active" id="p0">
+
+    <div class="vision-anchor">
+      <div class="vision-label">The long-term goal</div>
+      <div class="vision-statement">
+        A CTE curriculum that is <em>standard, guaranteed, and viable</em> across all three campuses
+      </div>
+    </div>
+
+    <div class="timeline-container">
+
+      <!-- SVG chevron arrow -->
+      <svg class="timeline-svg" viewBox="0 0 900 88" preserveAspectRatio="none">
+        <defs>
+          <clipPath id="arrowClip">
+            <polygon points="0,0 840,0 900,44 840,88 0,88 72,44"/>
+          </clipPath>
+        </defs>
+        <!-- Phase 1 fill (mint) -->
+        <rect x="0" y="0" width="300" height="88" fill="rgba(73,197,177,0.22)" clip-path="url(#arrowClip)"/>
+        <!-- Phase 2 fill -->
+        <rect x="300" y="0" width="300" height="88" fill="rgba(255,255,255,0.04)" clip-path="url(#arrowClip)"/>
+        <!-- Phase 3 fill -->
+        <rect x="600" y="0" width="300" height="88" fill="rgba(255,255,255,0.02)" clip-path="url(#arrowClip)"/>
+        <!-- Arrow outline -->
+        <polygon points="0,0 840,0 900,44 840,88 0,88 72,44"
+                 fill="none"
+                 stroke="rgba(73,197,177,0.45)"
+                 stroke-width="2"
+                 stroke-linejoin="miter"/>
+        <!-- Segment dividers -->
+        <line x1="300" y1="0" x2="300" y2="88" stroke="rgba(73,197,177,0.25)" stroke-width="1.5"/>
+        <line x1="600" y1="0" x2="600" y2="88" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+        <!-- Year labels -->
+        <text x="186" y="50" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="15" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,sans-serif">2026</text>
+        <text x="450" y="50" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="15" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,sans-serif">2027</text>
+        <text x="718" y="50" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="15" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,sans-serif">2028</text>
+      </svg>
+
+      <!-- Phase boxes -->
+      <div class="phase-boxes">
+        <div class="phase-box current" onclick="switchTab(1)">
+          <div class="phase-box-label">Phase 1</div>
+          <div class="phase-box-cta">Open →</div>
+        </div>
+        <div class="phase-box">
+          <div class="phase-box-label">Phase 2</div>
+        </div>
+        <div class="phase-box">
+          <div class="phase-box-label">Phase 3</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 1:THE IDEA
+  ══════════════════════════════════ -->
+  <div class="panel" id="p1">
+    <div class="example-badge">Example</div>
+
+    <div class="idea-frame">
+      <div class="idea-q">
+        How do we build<br>A CTE curriculum that is <em>standard, guaranteed, and viable</em> across all three campuses?
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-card blue" onclick="switchTab(2)">
+        <div class="flow-num">Structure</div>
+        <div class="flow-title"><strong>Where</strong> is it housed?</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-card crimson" onclick="switchTab(3)">
+        <div class="flow-num">Design</div>
+        <div class="flow-title"><strong>What</strong> is the format?</div>
+      </div>
+
+      <div class="flow-card violet" onclick="switchTab(4)">
+        <div class="flow-num">Build</div>
+        <div class="flow-title"><strong>How</strong> is it designed?</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 2:INFRASTRUCTURE
+  ══════════════════════════════════ -->
+  <div class="panel" id="p2">
+    <div class="opt-sidebar">
+      <div class="sidebar-section-title">Structure</div>
+
+      <div class="opt-btn c-blue active" onclick="switchOpt(2,'A',this)">
+        <div class="opt-dot"></div>
+        <div>
+          <div class="opt-btn-letter">Option A</div>
+          <div class="opt-btn-name">Google Drive / OneDrive <span style="font-weight:400; opacity:0.7;">(low-tech)</span></div>
+          <div class="opt-btn-sub">Shared folders and templates</div>
+        </div>
+      </div>
+      <div class="opt-btn c-blue" onclick="switchOpt(2,'B',this)">
+        <div class="opt-dot"></div>
+        <div>
+          <div class="opt-btn-letter">Option B</div>
+          <div class="opt-btn-name">Notion <span style="font-weight:400; opacity:0.7;">(mid-tech)</span></div>
+          <div class="opt-btn-sub">Notion / Obsidian or similar</div>
+        </div>
+      </div>
+      <div class="opt-btn c-blue" onclick="switchOpt(2,'C',this)">
+        <div class="opt-dot"></div>
+        <div>
+          <div class="opt-btn-letter">Option C</div>
+          <div class="opt-btn-name">Curriculum Platforms <span style="font-weight:400; opacity:0.7;">(high-tech)</span></div>
+          <div class="opt-btn-sub">Atlas, Chalk, Toddle, Curriculum Trak</div>
+        </div>
+      </div>
+
+      <div class="sidebar-note">
+        <div class="sidebar-note-lbl">Brainstorm Question</div>
+        <div class="sidebar-note-text" style="font-weight:700; color:rgba(255,255,255,0.75);"><strong>Where</strong> is it housed?</div>
+      </div>
+    </div>
+
+    <div class="opt-main">
+      <div class="example-badge">Example</div>
+      <div class="detail-pane">
+
+        <div class="opt-view active" id="v2A">
+          <div class="d-eyebrow">Option A:Structure</div>
+          <div class="d-title">Google Drive / OneDrive <span style="font-size:0.55em; font-weight:500; opacity:0.55; vertical-align:middle;">(low-tech)</span></div>
+          <div class="struct-layout">
+            <div class="struct-content-col">
+              <div class="d-grid">
+                <div class="d-card">
+                  <div class="d-card-lbl">+</div>
+                  <ul class="d-list pros">
+                    <li>Already in use</li>
+                    <li>Free alignment tracker in Sheets</li>
+                    <li>Works across campuses immediately</li>
+                  </ul>
+                </div>
+                <div class="d-card">
+                  <div class="d-card-lbl">−</div>
+                  <ul class="d-list cons">
+                    <li>No structural enforcement</li>
+                    <li>No cross-program visibility</li>
+                    <li>Degrades at scale</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="d-callout" style="border-color:var(--blue-bd); background:var(--blue-lt);">
+                <div class="d-callout-lbl" style="color:var(--blue);">LLS will</div>
+                <p>Design the folder architecture and deliver a ready-to-use template set.</p>
+              </div>
+            </div>
+            <div class="struct-img-col">
+              <img src="assets/Structure_01.png" alt="Google Drive folder structure example">
+            </div>
+          </div>
+        </div>
+
+        <div class="opt-view" id="v2B">
+          <div class="d-eyebrow">Option B:Structure</div>
+          <div class="d-title">Notion <span style="font-size:0.55em; font-weight:500; opacity:0.55; vertical-align:middle;">(mid-tech)</span></div>
+          <div class="struct-layout">
+            <div class="struct-content-col">
+              <div class="d-grid">
+                <div class="d-card">
+                  <div class="d-card-lbl">+</div>
+                  <ul class="d-list pros">
+                    <li>Free or low cost</li>
+                    <li>Units and competencies linked, not just filed</li>
+                    <li>Leadership views across programs</li>
+                  </ul>
+                </div>
+                <div class="d-card">
+                  <div class="d-card-lbl">−</div>
+                  <ul class="d-list cons">
+                    <li>Requires intentional setup</li>
+                    <li>Needs onboarding</li>
+                    <li>No CTE templates out of the box</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="d-callout" style="border-color:var(--blue-bd); background:var(--blue-lt);">
+                <div class="d-callout-lbl" style="color:var(--blue);">LLS will</div>
+                <p>Build and configure the workspace. Deliver a functional system with a teacher/coach onboarding guide.</p>
+              </div>
+            </div>
+            <div class="struct-img-col">
+              <img src="assets/Structure_02.png" alt="Notion workspace example">
+            </div>
+          </div>
+        </div>
+
+        <div class="opt-view" id="v2C">
+          <div class="d-eyebrow">Option C:Structure</div>
+          <div class="d-title">Curriculum Platforms <span style="font-size:0.55em; font-weight:500; opacity:0.55; vertical-align:middle;">(high-tech)</span></div>
+          <div class="d-sub">Atlas, Chalk, Toddle, Curriculum Trak</div>
+          <div class="struct-layout">
+            <div class="struct-content-col">
+              <div class="d-grid">
+                <div class="d-card">
+                  <div class="d-card-lbl">+</div>
+                  <ul class="d-list pros">
+                    <li>Purpose-built for this work</li>
+                    <li>Highest long-term ceiling</li>
+                    <li>Reporting built in</li>
+                  </ul>
+                </div>
+                <div class="d-card">
+                  <div class="d-card-lbl">−</div>
+                  <ul class="d-list cons">
+                    <li>Real licensing cost</li>
+                    <li>Onboarding required</li>
+                    <li>Best after process is established</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="d-callout" style="border-color:var(--blue-bd); background:var(--blue-lt);">
+                <div class="d-callout-lbl" style="color:var(--blue);">LLS will</div>
+                <p>Evaluate options, facilitate selection, and support implementation.</p>
+              </div>
+            </div>
+            <div class="struct-img-col">
+              <img src="assets/Structure_03.png" alt="Curriculum platform example">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 3:DESIGN
+  ══════════════════════════════════ -->
+  <div class="panel" id="p3">
+    <div class="opt-sidebar">
+      <div class="sidebar-section-title">Design</div>
+
+      <div class="opt-btn c-crimson active" onclick="switchOpt(3,'A',this)">
+        <div class="opt-dot"></div>
+        <div>
+          <div class="opt-btn-letter">Option A</div>
+          <div class="opt-btn-name">Task-List First</div>
+          <div class="opt-btn-sub">Start from the state task list</div>
+        </div>
+      </div>
+      <div class="opt-btn c-crimson" onclick="switchOpt(3,'B',this)">
+        <div class="opt-dot"></div>
+        <div>
+          <div class="opt-btn-letter">Option B</div>
+          <div class="opt-btn-name">Understanding by Design</div>
+          <div class="opt-btn-sub">Backward design from outcomes</div>
+        </div>
+      </div>
+      <div class="opt-btn c-crimson" onclick="switchOpt(3,'C',this)">
+        <div class="opt-dot"></div>
+        <div>
+          <div class="opt-btn-letter">Option C</div>
+          <div class="opt-btn-name">Hybrid</div>
+          <div class="opt-btn-sub">Task list anchors UbD structure</div>
+        </div>
+      </div>
+
+      <div class="sidebar-note">
+        <div class="sidebar-note-lbl">Brainstorm Question</div>
+        <div class="sidebar-note-text" style="font-weight:700; color:rgba(255,255,255,0.75);"><strong>What</strong> is the format?</div>
+      </div>
+    </div>
+
+    <div class="opt-main">
+      <div class="example-badge">Example</div>
+      <div class="detail-pane">
+
+        <div class="opt-view active" id="v3A">
+          <div class="d-eyebrow">Option A:Design</div>
+          <div class="d-title">Task-List First</div>
+          <div class="struct-layout">
+            <div class="struct-content-col">
+              <div class="d-grid">
+                <div class="d-card">
+                  <div class="d-card-lbl">+</div>
+                  <ul class="d-list pros">
+                    <li>Credential-accountable</li>
+                    <li>Familiar to CTE teachers/coaches</li>
+                    <li>Direct path to the classroom</li>
+                  </ul>
+                </div>
+                <div class="d-card">
+                  <div class="d-card-lbl">−</div>
+                  <ul class="d-list cons">
+                    <li>Risk of checklist curriculum</li>
+                    <li>Assessment drifts toward compliance</li>
+                    <li>No connection to bigger ideas</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="d-callout" style="border-color:var(--crimson-bd); background:var(--crimson-lt);">
+                <div class="d-callout-lbl" style="color:var(--crimson);">LLS will</div>
+                <p>Source task lists, map scope and sequence, deliver a competency framework ready for unit writing.</p>
+              </div>
+            </div>
+            <div class="struct-img-col">
+              <img src="assets/Design_01.png" alt="Task-list first design example">
+            </div>
+          </div>
+        </div>
+
+        <div class="opt-view" id="v3B">
+          <div class="d-eyebrow">Option B:Design</div>
+          <div class="d-title">UbD First</div>
+          <div class="struct-layout">
+            <div class="struct-content-col">
+              <div class="d-grid">
+                <div class="d-card">
+                  <div class="d-card-lbl">+</div>
+                  <ul class="d-list pros">
+                    <li>Skills have a "why"</li>
+                    <li>Authentic assessment by design</li>
+                    <li>Task list becomes the floor</li>
+                  </ul>
+                </div>
+                <div class="d-card">
+                  <div class="d-card-lbl">−</div>
+                  <ul class="d-list cons">
+                    <li>Harder to write well</li>
+                    <li>More abstract than task list</li>
+                    <li>Requires facilitated writing or PD</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="d-callout" style="border-color:var(--crimson-bd); background:var(--crimson-lt);">
+                <div class="d-callout-lbl" style="color:var(--crimson);">LLS will</div>
+                <p>Facilitate Stage 1 development with teachers/coaches. Deliver frameworks ready for unit writing.</p>
+              </div>
+            </div>
+            <div class="struct-img-col">
+              <img src="assets/Design_02.png" alt="UbD first design example">
+            </div>
+          </div>
+        </div>
+
+        <div class="opt-view" id="v3C">
+          <div class="d-eyebrow">Option C:Design</div>
+          <div class="d-title">Task List Anchors UbD</div>
+          <div class="struct-layout">
+            <div class="struct-content-col">
+              <div class="d-grid">
+                <div class="d-card">
+                  <div class="d-card-lbl">+</div>
+                  <ul class="d-list pros">
+                    <li>Accountability and transferability together</li>
+                    <li>Concrete entry point for everyone</li>
+                    <li>Most likely to produce SGV curriculum</li>
+                  </ul>
+                </div>
+                <div class="d-card">
+                  <div class="d-card-lbl">−</div>
+                  <ul class="d-list cons">
+                    <li>More complex build</li>
+                    <li>Risk of UbD becoming decorative</li>
+                    <li>Longest path to completion</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="d-callout" style="border-color:var(--crimson-bd); background:var(--crimson-lt);">
+                <div class="d-callout-lbl" style="color:var(--crimson);">LLS will</div>
+                <p>Lead competency clustering, facilitate UbD sessions, and deliver integrated unit frameworks.</p>
+              </div>
+            </div>
+            <div class="struct-img-col">
+              <img src="assets/Design_03.png" alt="Task list anchors UbD example">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 4:CONTEXT
+  ══════════════════════════════════ -->
+  <div class="panel" id="p4">
+    <div class="opt-sidebar">
+      <div class="sidebar-section-title">Build</div>
+
+      <div class="opt-btn c-violet active" onclick="switchOpt(4,'A',this)">
+        <div class="opt-dot"></div>
+        <div>
+          <div class="opt-btn-letter">Option A</div>
+          <div class="opt-btn-name">LLS Builds the Exemplar</div>
+          <div class="opt-btn-sub">One complete unit built by LLS as the model</div>
+        </div>
+      </div>
+      <div class="opt-btn c-violet" onclick="switchOpt(4,'B',this)">
+        <div class="opt-dot"></div>
+        <div>
+          <div class="opt-btn-letter">Option B</div>
+          <div class="opt-btn-name">Facilitated Writing Sessions</div>
+          <div class="opt-btn-sub">LLS facilitates; teachers/coaches produce units in the room</div>
+        </div>
+      </div>
+      <div class="opt-btn c-violet" onclick="switchOpt(4,'C',this)">
+        <div class="opt-dot"></div>
+        <div>
+          <div class="opt-btn-letter">Option C</div>
+          <div class="opt-btn-name">Curriculum Writing PD</div>
+          <div class="opt-btn-sub">LLS trains teachers/coaches to write; teachers/coaches produce independently</div>
+        </div>
+      </div>
+
+      <div class="sidebar-note">
+        <div class="sidebar-note-lbl">Brainstorm Question</div>
+        <div class="sidebar-note-text" style="font-weight:700; color:rgba(255,255,255,0.75);"><strong>How</strong> is it designed?</div>
+      </div>
+    </div>
+
+    <div class="opt-main">
+      <div class="example-badge">Example</div>
+      <div class="detail-pane">
+
+        <div class="opt-view active" id="v4A">
+          <div class="d-eyebrow">Option A:Build</div>
+          <div class="d-title">LLS Builds the Exemplar</div>
+          <div class="d-grid">
+            <div class="d-card">
+              <div class="d-card-lbl">+</div>
+              <ul class="d-list pros">
+                <li>Teachers/coaches see it before they produce it</li>
+                <li>No ambiguity about "done"</li>
+                <li>Strongest quality control</li>
+              </ul>
+            </div>
+            <div class="d-card">
+              <div class="d-card-lbl">−</div>
+              <ul class="d-list cons">
+                <li>LLS needs deep program context</li>
+                <li>Lower teacher/coach ownership</li>
+                <li>May need revision across programs</li>
+              </ul>
+            </div>
+          </div>
+          <div class="d-callout" style="border-color:var(--violet-bd); background:var(--violet-lt);">
+            <div class="d-callout-lbl" style="color:var(--violet);">LLS will</div>
+            <p>Produce one fully realized unit plan. It becomes the model.</p>
+          </div>
+        </div>
+
+        <div class="opt-view" id="v4B">
+          <div class="d-eyebrow">Option B:Build</div>
+          <div class="d-title">Facilitated Writing Sessions</div>
+          <div class="d-grid">
+            <div class="d-card">
+              <div class="d-card-lbl">+</div>
+              <ul class="d-list pros">
+                <li>Everyone does what they do best</li>
+                <li>Grounded in real program expertise</li>
+                <li>Teachers/coaches learn by building</li>
+              </ul>
+            </div>
+            <div class="d-card">
+              <div class="d-card-lbl">−</div>
+              <ul class="d-list cons">
+                <li>Requires significant scheduled time</li>
+                <li>Harder to scale quickly</li>
+                <li>Quality depends on facilitation</li>
+              </ul>
+            </div>
+          </div>
+          <div class="d-callout" style="border-color:var(--violet-bd); background:var(--violet-lt);">
+            <div class="d-callout-lbl" style="color:var(--violet);">LLS will</div>
+            <p>Facilitate structured writing sessions. We bring the framework; teachers/coaches bring the expertise.</p>
+          </div>
+        </div>
+
+        <div class="opt-view" id="v4C">
+          <div class="d-eyebrow">Option C:Build</div>
+          <div class="d-title">Curriculum Writing PD</div>
+          <div class="d-grid">
+            <div class="d-card">
+              <div class="d-card-lbl">+</div>
+              <ul class="d-list pros">
+                <li>Builds teacher/coach independence</li>
+                <li>Scales well</li>
+                <li>Higher ownership and expertise</li>
+              </ul>
+            </div>
+            <div class="d-card">
+              <div class="d-card-lbl">−</div>
+              <ul class="d-list cons">
+                <li>Quality varies until fluency develops</li>
+                <li>Structural drift without close review</li>
+                <li>Slowest path to production quality</li>
+              </ul>
+            </div>
+          </div>
+          <div class="d-callout" style="border-color:var(--violet-bd); background:var(--violet-lt);">
+            <div class="d-callout-lbl" style="color:var(--violet);">LLS will</div>
+            <p>Design and deliver curriculum writing PD. Coach teachers/coaches as they produce independently.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
+
+<script>
+function switchTab(n) {
+  const panels = document.querySelectorAll('.panel');
+  const tabs   = document.querySelectorAll('.tab');
+
+  // Animate outgoing panel
+  panels.forEach(p => {
+    if (p.classList.contains('active')) {
+      p.classList.remove('active');
+      p.classList.add('leaving');
+      setTimeout(() => p.classList.remove('leaving'), 300);
+    }
+  });
+
+  // Activate incoming panel
+  tabs.forEach((t,i) => t.classList.toggle('active', i === n));
+  panels[n].classList.add('active');
+}
+
+function switchOpt(tab, opt, btn) {
+  const panel = document.getElementById('p' + tab);
+  panel.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  panel.querySelectorAll('.opt-view').forEach(v => v.classList.remove('active'));
+  const target = document.getElementById('v' + tab + opt);
+  if (target) target.classList.add('active');
+
+  ['A','B','C'].forEach(o => {
+    const tag = document.getElementById('ct' + tab + o);
+    if (tag) tag.style.display = (o === opt) ? 'inline-block' : 'none';
+  });
+}
+</script>
+</body>
+</html>
